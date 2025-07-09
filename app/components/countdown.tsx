@@ -16,5 +16,9 @@ export const Countdown = () => {
     )}s`
   }, [remaining])
 
-  return <span className="tabular-nums">{formattedTimeLeft}</span>
+  return (
+    <span className="tabular-nums" suppressHydrationWarning>
+      {formattedTimeLeft}
+    </span>
+  )
 }

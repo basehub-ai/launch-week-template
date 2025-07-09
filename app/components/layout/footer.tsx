@@ -16,13 +16,13 @@ export const Footer = async () => {
             {footer.vector && (
               <span
                 dangerouslySetInnerHTML={{ __html: footer.vector }}
-                className="lowercase light-only text-dim translate-y-[33%] block select-none w-[105vw] relative left-1/2 -translate-x-1/2 font-mono"
+                className="lowercase light-only text-dim translate-y-[24%] block select-none w-[105vw] relative left-1/2 -translate-x-1/2 font-mono"
               />
             )}
             {footer.vectorDark && (
               <span
                 dangerouslySetInnerHTML={{ __html: footer.vectorDark }}
-                className="lowercase dark-only text-dim translate-y-[33%] block select-none w-[105vw] relative left-1/2 -translate-x-1/2 font-mono"
+                className="lowercase dark-only text-dim translate-y-[24%] block select-none w-[105vw] relative left-1/2 -translate-x-1/2 font-mono"
               />
             )}
           </footer>
