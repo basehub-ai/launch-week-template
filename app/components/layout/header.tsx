@@ -42,9 +42,9 @@ export const Header = async () => {
 
         return (
           <header>
-            <div className="h-header max-w-7xl flex flex-nowrap items-center justify-between gap-x-5 mx-auto px-4">
-              {/* left side */}
-              <div className="flex items-center gap-x-2">
+            <div className="min-h-header max-w-7xl flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5 mx-auto px-4">
+              {/* left/top side */}
+              <div className="flex items-center gap-x-2 pt-4 pb-4">
                 <Icon
                   content={header.logo}
                   components={{
@@ -71,14 +71,19 @@ export const Header = async () => {
                 )}
               </div>
 
-              {/* right side */}
-              <div className="flex items-center gap-x-1 font-semibold">
+              {/* right/bottom side */}
+              <div className="flex items-end lg:items-center gap-x-1 font-medium pb-8 lg:pb-0">
                 {days.items.map((day, index) => (
                   <React.Fragment key={day._id}>
-                    <Icon content={false ? unlockedDay : lockedDay} />
-                    <p key={day._id} className="text-sm">
-                      {day._title || `Day ${index + 1}`}
-                    </p>
+                    <div className="flex flex-col md:flex-row items-center gap-x-1">
+                      <Icon content={false ? unlockedDay : lockedDay} />
+                      <p
+                        key={day._id}
+                        className="text-sm whitespace-nowrap text-center"
+                      >
+                        {day._title || `Day ${index + 1}`}
+                      </p>
+                    </div>
                     {index < days.items.length - 1 && (
                       <span
                         style={{
@@ -86,7 +91,7 @@ export const Header = async () => {
                             'linear-gradient(to right, transparent 50%, var(--color-faint) 50%)',
                           backgroundSize: '4px 2px'
                         }}
-                        className="h-px w-8"
+                        className="h-px w-8 mb-2 lg:mb-0"
                       />
                     )}
                   </React.Fragment>

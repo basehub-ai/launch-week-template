@@ -35,8 +35,7 @@
   --shade-hover: #E3E3E3;
 
   ::selection {
-    background-color: var(--accent);
-    color: var(--color-white);
+    background-color: var(--accent-transparent);
   }
 }
 
@@ -57,6 +56,16 @@
 
     /* action */
     --shade-hover: #1B1B1B;
+  }
+
+  .light-only {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .dark-only {
+    display: none;
   }
 }
 

@@ -60,6 +60,8 @@ export interface Scalars {
     Int: number,
     JSON: any,
     String: string,
+    bshb_event_52612000: `bshb_event_52612000:${string}`,
+    schema_bshb_event_52612000: {email: string;},
 }
 
 export type AnalyticsKeyScope = 'query' | 'send'
@@ -252,6 +254,15 @@ export interface Days_1 {
     __typename: 'Days_1'
 }
 
+export interface EmailSubscriptions {
+    /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
+    adminKey: Scalars['bshb_event_52612000']
+    /** The `ingestKey` gives clients the ability to send new events to this block. Generally, it's safe to expose it to the public. */
+    ingestKey: Scalars['bshb_event_52612000']
+    schema: Scalars['BSHBEventSchema']
+    __typename: 'EmailSubscriptions'
+}
+
 export interface Footer {
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
@@ -297,9 +308,9 @@ export interface Input {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    emailSubscriptions: EmailSubscriptions
     iconButton: Scalars['String']
     label: (Scalars['String'] | null)
-    placeholder: (Scalars['String'] | null)
     __typename: 'Input'
 }
 
@@ -912,6 +923,15 @@ export interface Days_1GenqlSelection{
     __typename?: boolean | number
 }
 
+export interface EmailSubscriptionsGenqlSelection{
+    /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
+    adminKey?: boolean | number
+    /** The `ingestKey` gives clients the ability to send new events to this block. Generally, it's safe to expose it to the public. */
+    ingestKey?: boolean | number
+    schema?: boolean | number
+    __typename?: boolean | number
+}
+
 export interface FooterGenqlSelection{
     _analyticsKey?: { __args: {
     /**
@@ -983,9 +1003,9 @@ export interface InputGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    emailSubscriptions?: EmailSubscriptionsGenqlSelection
     iconButton?: boolean | number
     label?: boolean | number
-    placeholder?: boolean | number
     __typename?: boolean | number
 }
 
@@ -1503,6 +1523,10 @@ export interface FragmentsMap {
   Days_1: {
     root: Days_1,
     selection: Days_1GenqlSelection,
+}
+  EmailSubscriptions: {
+    root: EmailSubscriptions,
+    selection: EmailSubscriptionsGenqlSelection,
 }
   Footer: {
     root: Footer,

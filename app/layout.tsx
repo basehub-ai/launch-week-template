@@ -8,6 +8,7 @@ import './globals.css'
 import { Header } from './components/layout/header'
 import { basehub } from 'basehub'
 import { Pump } from 'basehub/react-pump'
+import { siteOrigin } from '@/constants/routing'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { site } = await basehub({ draft: true }).query({
@@ -16,17 +17,35 @@ export const generateMetadata = async (): Promise<Metadata> => {
         title: true,
         description: true,
         favicon: { url: true },
-        ogImage: { url: true, width: true, height: true }
+        ogImage: { url: true }
       }
     }
   })
 
+  const title = site.metadata.title
+  const description = site.metadata.description
+
   return {
-    title: site.metadata.title,
-    description: site.metadata.description,
+    title,
+    description,
     icons: {
       icon: site.metadata.favicon.url,
       shortcut: site.metadata.favicon.url
+    },
+    openGraph: {
+      title,
+      description,
+      siteName: 'BaseHub',
+      images: [
+        {
+          width: 1200,
+          height: 630,
+          url: site.metadata.ogImage.url
+        }
+      ],
+      locale: 'en-US',
+      type: 'website',
+      url: siteOrigin
     }
   }
 }
@@ -37,18 +56,26 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <Pump queries={[{ site: { accent: { hex: true } } }]}>
+    <Pump queries={[{ site: { accent: { r: true, g: true, b: true } } }]}>
       {async ([
         {
-          site: { accent }
+          site: {
+            accent: { r, g, b }
+          }
         }
       ]) => {
         'use server'
 
+        const accent = `rgb(${r}, ${g}, ${b})`
+        const accentTransparent = `rgba(${r}, ${g}, ${b}, 0.2)`
+
         return (
           <html lang="en">
             <body
-              style={{ ['--accent' as string]: accent.hex }}
+              style={{
+                ['--accent' as string]: accent,
+                ['--accent-transparent' as string]: accentTransparent
+              }}
               className={`${GeistSans.variable} ${GeistMono.variable} antialiased min-h-screen flex flex-col`}
             >
               <Header />

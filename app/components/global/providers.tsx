@@ -13,21 +13,16 @@ export const Providers = async ({
       {async ([
         {
           days: {
-            days: { items }
+            days: { item }
           }
         }
       ]) => {
         'use server'
 
-        const startDate = items?.[0]?.date
-          ? new Date(items[0].date)
-          : new Date()
-        const endDate = items?.[items.length - 1]?.date
-          ? new Date(items[items.length - 1].date)
-          : new Date()
+        const startDate = item?.date ? new Date(item.date) : new Date()
 
         return (
-          <ClientProvider startDate={startDate} endDate={endDate}>
+          <ClientProvider startDate={new Date()} endDate={startDate}>
             {children}
           </ClientProvider>
         )

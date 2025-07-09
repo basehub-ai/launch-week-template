@@ -1,9 +1,10 @@
 import * as React from 'react'
 
 import { Pump } from 'basehub/react-pump'
-import { Icon } from 'basehub/react-icon'
 import { Countdown } from './components/countdown'
 import { RichText } from 'basehub/react-rich-text'
+import { NewsletterForm } from './components/newsletter-form'
+import { countdownInputFragment } from './components/newsletter-form/fragment'
 
 export default async function Home() {
   return (
@@ -11,11 +12,7 @@ export default async function Home() {
       queries={[
         {
           countdown: {
-            input: {
-              label: true,
-              placeholder: true,
-              iconButton: true
-            },
+            input: countdownInputFragment,
             title: {
               json: {
                 content: true
@@ -57,41 +54,7 @@ export default async function Home() {
                 </h1>
               </div>
 
-              <form>
-                <label
-                  htmlFor="waitlist-input"
-                  className="text-sm font-medium opacity-80"
-                >
-                  {countdown.input.label}
-                </label>
-                <div className="dashed">
-                  <div className="flex h-8">
-                    <input
-                      autoFocus
-                      id="waitlist-input"
-                      placeholder={countdown.input.placeholder ?? undefined}
-                      className="px-3 py-2 flex-1 placeholder:text-foreground text-sm bg-base placeholder:opacity-80"
-                      type="email"
-                    />
-
-                    <div className="flex dashed !pr-0 !py-0">
-                      <button
-                        // disabled
-                        className="p-2 focus-visible:border-l-transparent bg-accent text-label disabled:bg-shade-hover disabled:text-foreground"
-                      >
-                        <Icon
-                          content={countdown.input.iconButton}
-                          components={{
-                            svg: (props) => (
-                              <svg {...props} className="size-3.5" />
-                            )
-                          }}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
+              <NewsletterForm input={countdown.input} />
             </div>
           </main>
         )
