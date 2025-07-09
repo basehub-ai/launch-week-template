@@ -15,7 +15,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
       metadata: {
         title: true,
         description: true,
-        favicon: { url: true }
+        favicon: { url: true },
+        ogImage: { url: true, width: true, height: true }
       }
     }
   })

@@ -50,7 +50,7 @@ export default async function Home() {
                         )
                       })}
                 </p>
-                <h1 className="font-semibold mb-6 text-dim">
+                <h1 className="font-semibold mb-6 text-dim text-xl">
                   <RichText components={{ p: (props) => <p {...props} /> }}>
                     {countdown.title.json.content}
                   </RichText>
@@ -60,7 +60,7 @@ export default async function Home() {
               <form>
                 <label
                   htmlFor="waitlist-input"
-                  className="text-xs font-medium opacity-80"
+                  className="text-sm font-medium opacity-80"
                 >
                   {countdown.input.label}
                 </label>
@@ -70,7 +70,7 @@ export default async function Home() {
                       autoFocus
                       id="waitlist-input"
                       placeholder={countdown.input.placeholder ?? undefined}
-                      className="px-3 py-2 flex-1 placeholder:text-foreground text-xs bg-base placeholder:opacity-80"
+                      className="px-3 py-2 flex-1 placeholder:text-foreground text-sm bg-base placeholder:opacity-80"
                       type="email"
                     />
 

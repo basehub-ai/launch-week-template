@@ -263,6 +263,7 @@ export interface Footer {
     _title: Scalars['String']
     copy: (Scalars['String'] | null)
     vector: (Scalars['String'] | null)
+    vectorDark: (Scalars['String'] | null)
     __typename: 'Footer'
 }
 
@@ -283,6 +284,7 @@ export interface Header {
     _title: Scalars['String']
     links: Links
     logo: Scalars['String']
+    title: (Scalars['String'] | null)
     __typename: 'Header'
 }
 
@@ -927,6 +929,7 @@ export interface FooterGenqlSelection{
     _title?: boolean | number
     copy?: boolean | number
     vector?: boolean | number
+    vectorDark?: boolean | number
     __typename?: boolean | number
 }
 
@@ -961,6 +964,7 @@ export interface HeaderGenqlSelection{
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     logo?: boolean | number
+    title?: boolean | number
     __typename?: boolean | number
 }
 

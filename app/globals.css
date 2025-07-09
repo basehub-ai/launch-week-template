@@ -34,8 +34,6 @@
   /* action */
   --shade-hover: #E3E3E3;
 
-  font-size: 20px;
-
   ::selection {
     background-color: var(--accent);
     color: var(--color-white);
@@ -70,7 +68,7 @@ body {
   font-family: var(--font-geist-mono);
   letter-spacing: -1.28px;
 
-  .text-xs {
+  .text-sm {
     letter-spacing: -0.96px;
   }
 
