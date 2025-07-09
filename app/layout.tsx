@@ -9,6 +9,7 @@ import { Header } from './components/layout/header'
 import { basehub } from 'basehub'
 import { Pump } from 'basehub/react-pump'
 import { siteOrigin } from '@/constants/routing'
+import { PageView } from './components/page-view'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { site } = await basehub({ draft: true }).query({
@@ -56,12 +57,24 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <Pump queries={[{ site: { accent: { r: true, g: true, b: true } } }]}>
+    <Pump
+      queries={[
+        {
+          site: { accent: { r: true, g: true, b: true } },
+          analytics: {
+            pageviews: {
+              ingestKey: true
+            }
+          }
+        }
+      ]}
+    >
       {async ([
         {
           site: {
             accent: { r, g, b }
-          }
+          },
+          analytics
         }
       ]) => {
         'use server'
@@ -70,17 +83,22 @@ export default async function RootLayout({
         const accentTransparent = `rgba(${r}, ${g}, ${b}, 0.2)`
 
         return (
-          <html lang="en">
+          <html
+            lang="en"
+            className={`${GeistSans.variable} ${GeistMono.variable}`}
+          >
             <body
               style={{
                 ['--accent' as string]: accent,
                 ['--accent-transparent' as string]: accentTransparent
               }}
-              className={`${GeistSans.variable} ${GeistMono.variable} antialiased min-h-screen flex flex-col`}
+              className={`antialiased min-h-screen flex flex-col`}
             >
               <Header />
               <Providers>{children}</Providers>
               <Footer />
+
+              <PageView eKey={analytics.pageviews.ingestKey} />
             </body>
           </html>
         )

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
@@ -19,20 +19,20 @@
 
 :root {
   /* bg */
-  --base: #FFF;
-  --background: #FAFAFA;
+  --base: #fff;
+  --background: #fafafa;
 
   /* text */
   --foreground: var(--faint);
   --faint: #909090;
   --dim: #303030;
-  --label: #FAFAFA;
-  
+  --label: #fafafa;
+
   /* border */
-  --border-solid: #D9D9D9;
+  --border-solid: #d9d9d9;
 
   /* action */
-  --shade-hover: #E3E3E3;
+  --shade-hover: #e3e3e3;
 
   ::selection {
     background-color: var(--accent-transparent);
@@ -42,20 +42,20 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* bg */
-    --base: #0C0C0C;
+    --base: #0c0c0c;
     --background: #040404;
 
     /* text */
     --foreground: var(--faint);
     --faint: #646464;
-    --dim: #DEDEDE;
-    --label: #FAFAFA;
-    
+    --dim: #dedede;
+    --label: #fafafa;
+
     /* border */
     --border-solid: #252525;
 
     /* action */
-    --shade-hover: #1B1B1B;
+    --shade-hover: #1b1b1b;
   }
 
   .light-only {
@@ -68,7 +68,6 @@
     display: none;
   }
 }
-
 
 body {
   overflow: hidden;
@@ -103,9 +102,46 @@ body {
 
   .dashed {
     padding: 1px !important;
-    background-image: repeating-linear-gradient(0deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(90deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(180deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(270deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px);
-    background-size: 1px 100%, 100% 1px, 1px 100% , 100% 1px;
+    background-image: repeating-linear-gradient(
+        0deg,
+        var(--border-solid),
+        var(--border-solid) 5px,
+        transparent 5px,
+        transparent 8px,
+        var(--border-solid) 8px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        var(--border-solid),
+        var(--border-solid) 5px,
+        transparent 5px,
+        transparent 8px,
+        var(--border-solid) 8px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        var(--border-solid),
+        var(--border-solid) 5px,
+        transparent 5px,
+        transparent 8px,
+        var(--border-solid) 8px
+      ),
+      repeating-linear-gradient(
+        270deg,
+        var(--border-solid),
+        var(--border-solid) 5px,
+        transparent 5px,
+        transparent 8px,
+        var(--border-solid) 8px
+      );
+    background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
   }
+}
+
+svg text,
+svg tspan {
+  cursor: default;
+  user-select: none;
 }
