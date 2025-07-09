@@ -44,14 +44,14 @@ export const Header = async () => {
           <header>
             <div className="min-h-header max-w-7xl flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5 mx-auto px-4">
               {/* left/top side */}
-              <div className="flex items-center gap-x-2 pt-4 pb-4">
+              <div className="flex items-center flex-wrap gap-x-2 pt-4 pb-4">
                 <Icon
                   content={header.logo}
                   components={{
                     svg: (props) => <svg {...props} className="text-dim" />
                   }}
                 />
-                <span className="text-sm font-semibold text-dim">
+                <span className="text-sm font-semibold text-dim whitespace-nowrap">
                   {header.title}
                 </span>
                 {Boolean(header.links.items.length) && (
@@ -73,29 +73,35 @@ export const Header = async () => {
 
               {/* right/bottom side */}
               <div className="flex items-end lg:items-center gap-x-1 font-medium pb-8 lg:pb-0">
-                {days.items.map((day, index) => (
-                  <React.Fragment key={day._id}>
-                    <div className="flex flex-col md:flex-row items-center gap-x-1">
-                      <Icon content={false ? unlockedDay : lockedDay} />
-                      <p
-                        key={day._id}
-                        className="text-sm whitespace-nowrap text-center"
-                      >
-                        {day._title || `Day ${index + 1}`}
-                      </p>
-                    </div>
-                    {index < days.items.length - 1 && (
-                      <span
-                        style={{
-                          background:
-                            'linear-gradient(to right, transparent 50%, var(--color-faint) 50%)',
-                          backgroundSize: '4px 2px'
-                        }}
-                        className="h-px w-8 mb-2 lg:mb-0"
-                      />
-                    )}
-                  </React.Fragment>
-                ))}
+                {days.items.map((day, index) => {
+                  const dayHasPassed = new Date(day.date) < new Date()
+
+                  return (
+                    <React.Fragment key={day._id}>
+                      <div className="flex flex-col md:flex-row items-center gap-x-1">
+                        <Icon
+                          content={dayHasPassed ? unlockedDay : lockedDay}
+                        />
+                        <p
+                          key={day._id}
+                          className="text-sm whitespace-nowrap text-center"
+                        >
+                          {day._title || `Day ${index + 1}`}
+                        </p>
+                      </div>
+                      {index < days.items.length - 1 && (
+                        <span
+                          style={{
+                            background:
+                              'linear-gradient(to right, transparent 50%, var(--color-faint) 50%)',
+                            backgroundSize: '4px 2px'
+                          }}
+                          className="h-px w-8 mb-2 lg:mb-0"
+                        />
+                      )}
+                    </React.Fragment>
+                  )
+                })}
               </div>
             </div>
           </header>

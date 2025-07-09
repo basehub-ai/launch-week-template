@@ -61,62 +61,58 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
   }, [state])
 
   return (
-    <>
-      <form action={formAction}>
-        {input.emailSubscriptions.schema.map((i) => {
-          return (
-            <React.Fragment key={i.id}>
-              <label htmlFor={i.id} className="text-sm font-medium opacity-80">
-                {i.label}
-              </label>
-              <div className="dashed">
-                <div className="flex h-8">
-                  <input
-                    autoFocus
-                    {...i}
-                    ref={(el) => {
-                      inputRefs.current[i.name] = el
-                    }}
-                    onChange={handleChange}
-                    value={formValues[i.name]}
-                    className="px-3 py-2 flex-1 placeholder:text-foreground bg-base placeholder:opacity-80"
-                  />
+    <form action={formAction}>
+      {input.emailSubscriptions.schema.map((i) => {
+        return (
+          <React.Fragment key={i.id}>
+            <label htmlFor={i.id} className="text-sm font-medium opacity-80">
+              {i.label}
+            </label>
+            <div className="dashed mt-2">
+              <div className="flex h-8">
+                <input
+                  autoFocus
+                  {...i}
+                  ref={(el) => {
+                    inputRefs.current[i.name] = el
+                  }}
+                  onChange={handleChange}
+                  value={formValues[i.name]}
+                  className="px-3 py-2 flex-1 placeholder:text-foreground xl:text-sm bg-base placeholder:opacity-80"
+                />
 
-                  <div className="flex dashed !pr-0 !py-0">
-                    <button
-                      disabled={!formValues[i.name]}
-                      className="p-2 focus-visible:border-l-transparent bg-accent text-label disabled:bg-shade-hover disabled:text-foreground"
-                    >
-                      <Icon
-                        content={input.iconButton}
-                        components={{
-                          svg: (props) => (
-                            <svg {...props} className="size-3.5" />
-                          )
-                        }}
-                      />
-                    </button>
-                  </div>
+                <div className="flex dashed !pr-0 !py-0">
+                  <button
+                    disabled={!formValues[i.name]}
+                    className="p-2 focus-visible:border-l-transparent bg-accent text-label disabled:bg-shade-hover disabled:text-foreground"
+                  >
+                    <Icon
+                      content={input.iconButton}
+                      components={{
+                        svg: (props) => <svg {...props} className="size-3.5" />
+                      }}
+                    />
+                  </button>
                 </div>
               </div>
+            </div>
 
-              {!state.success && state.errors[i.name] ? (
-                <div className="text-red-500 text-sm mt-2">
-                  {state.errors[i.name]}
-                </div>
-              ) : (
-                <>
-                  {!!subscribedEmail && (
-                    <div className="text-green-500 rounded text-sm mt-2">
-                      Subscribed with <strong>{subscribedEmail}</strong>
-                    </div>
-                  )}
-                </>
-              )}
-            </React.Fragment>
-          )
-        })}
-      </form>
-    </>
+            {!state.success && state.errors[i.name] ? (
+              <div className="text-red-500 text-sm mt-3">
+                {state.errors[i.name]}
+              </div>
+            ) : (
+              <>
+                {!!subscribedEmail && (
+                  <div className="text-green-500 rounded text-sm mt-3">
+                    Subscribed with <strong>{subscribedEmail}</strong>
+                  </div>
+                )}
+              </>
+            )}
+          </React.Fragment>
+        )
+      })}
+    </form>
   )
 }
