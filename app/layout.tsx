@@ -1,16 +1,17 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Providers } from './components/global/providers'
 import { Footer } from './components/layout/footer'
-
-import './globals.css'
 import { Header } from './components/layout/header'
 import { basehub } from 'basehub'
 import { Pump } from 'basehub/react-pump'
 import { siteOrigin } from '@/constants/routing'
 import { PageView } from './components/page-view'
 import { Toolbar } from 'basehub/next-toolbar'
+
+export const dynamic = 'force-static'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { site } = await basehub({ draft: true }).query({
