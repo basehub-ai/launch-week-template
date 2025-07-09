@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@bsmnt/drop": "^1.2.2",
-    "basehub": "^9.0.20",
+    "basehub": "^9.0.21",
     "clsx": "^2.1.1",
     "geist": "^1.4.2",
     "next": "15.3.5",
