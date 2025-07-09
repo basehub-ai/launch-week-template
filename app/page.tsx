@@ -11,23 +11,25 @@ export default async function Home() {
     <Pump
       queries={[
         {
-          countdown: {
-            input: countdownInputFragment,
-            title: {
-              json: {
-                content: true
-              }
-            },
-            overtitle: true
+          site: {
+            countdown: {
+              input: countdownInputFragment,
+              title: {
+                json: {
+                  content: true
+                }
+              },
+              overtitle: true
+            }
           }
         }
       ]}
     >
-      {async ([{ countdown }]) => {
+      {async ([{ site }]) => {
         'use server'
 
         const hasCountdown = Boolean(
-          countdown?.overtitle?.includes(`{{countdown}}`)
+          site.countdown.overtitle?.includes(`{{countdown}}`)
         )
 
         return (
@@ -36,7 +38,7 @@ export default async function Home() {
               <div>
                 <p className="text-accent italic font-medium mb-1">
                   {!!hasCountdown &&
-                    countdown.overtitle
+                    site.countdown.overtitle
                       ?.split(`{{countdown}}`)
                       .map((seg, index) => {
                         return (
@@ -49,12 +51,12 @@ export default async function Home() {
                 </p>
                 <h1 className="font-semibold mb-6 text-dim text-xl">
                   <RichText components={{ p: (props) => <p {...props} /> }}>
-                    {countdown.title.json.content}
+                    {site.countdown.title.json.content}
                   </RichText>
                 </h1>
               </div>
 
-              <NewsletterForm input={countdown.input} />
+              <NewsletterForm input={site.countdown.input} />
             </div>
           </main>
         )

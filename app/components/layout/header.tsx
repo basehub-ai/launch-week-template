@@ -21,11 +21,13 @@ export const Header = async () => {
               }
             }
           },
-          days: {
+          site: {
             days: {
               __args: { orderBy: 'date__ASC' },
               items: { _id: true, _title: true, date: true }
-            },
+            }
+          },
+          icons: {
             lockedDay: true,
             unlockedDay: true
           }
@@ -35,7 +37,8 @@ export const Header = async () => {
       {async ([
         {
           header,
-          days: { days, lockedDay, unlockedDay }
+          site: { days },
+          icons: { lockedDay, unlockedDay }
         }
       ]) => {
         'use server'

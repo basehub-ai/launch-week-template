@@ -103,7 +103,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Countdown | Days | DaysItem | Days_1 | Footer | Header | Input | LinkComponent | Links | Metadata | Site | _AgentSTART | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Metadata | Site | _AgentSTART | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -162,7 +162,7 @@ export interface BlockImage {
     __typename: 'BlockImage'
 }
 
-export type BlockList = (Days_1 | Links | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockList = (Days | Links | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockOgImage {
     height: Scalars['Int']
@@ -209,13 +209,17 @@ export interface Days {
     _dashboardUrl: Scalars['String']
     _id: Scalars['String']
     _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
     _slug: Scalars['String']
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
-    days: Days_1
-    lockedDay: Scalars['String']
-    unlockedDay: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (DaysItem | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: DaysItem[]
     __typename: 'Days'
 }
 
@@ -234,25 +238,6 @@ export interface DaysItem {
 }
 
 export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'date__ASC' | 'date__DESC'
-
-export interface Days_1 {
-    _analyticsKey: Scalars['String']
-    _dashboardUrl: Scalars['String']
-    _id: Scalars['String']
-    _idPath: Scalars['String']
-    _meta: ListMeta
-    /** The key used to search from the frontend. */
-    _searchKey: Scalars['String']
-    _slug: Scalars['String']
-    _slugPath: Scalars['String']
-    _sys: BlockDocumentSys
-    _title: Scalars['String']
-    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
-    item: (DaysItem | null)
-    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
-    items: DaysItem[]
-    __typename: 'Days_1'
-}
 
 export interface EmailSubscriptions {
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -299,6 +284,20 @@ export interface Header {
     __typename: 'Header'
 }
 
+export interface Icons {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    lockedDay: Scalars['String']
+    unlockedDay: Scalars['String']
+    __typename: 'Icons'
+}
+
 export interface Input {
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
@@ -310,7 +309,6 @@ export interface Input {
     _title: Scalars['String']
     emailSubscriptions: EmailSubscriptions
     iconButton: Scalars['String']
-    label: (Scalars['String'] | null)
     __typename: 'Input'
 }
 
@@ -419,10 +417,9 @@ export interface Query {
     /** The structure of the repository. Used by START. */
     _structure: Scalars['JSON']
     _sys: RepoSys
-    countdown: Countdown
-    days: Days
     footer: Footer
     header: Header
+    icons: Icons
     site: Site
     __typename: 'Query'
 }
@@ -449,6 +446,8 @@ export interface Site {
     _sys: BlockDocumentSys
     _title: Scalars['String']
     accent: BlockColor
+    countdown: Countdown
+    days: Days
     metadata: Metadata
     __typename: 'Site'
 }
@@ -689,9 +688,9 @@ export interface BlockDocumentGenqlSelection{
     on_Countdown?: CountdownGenqlSelection
     on_Days?: DaysGenqlSelection
     on_DaysItem?: DaysItemGenqlSelection
-    on_Days_1?: Days_1GenqlSelection
     on_Footer?: FooterGenqlSelection
     on_Header?: HeaderGenqlSelection
+    on_Icons?: IconsGenqlSelection
     on_Input?: InputGenqlSelection
     on_LinkComponent?: LinkComponentGenqlSelection
     on_Links?: LinksGenqlSelection
@@ -778,7 +777,7 @@ export interface BlockListGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
-    on_Days_1?: Days_1GenqlSelection
+    on_Days?: DaysGenqlSelection
     on_Links?: LinksGenqlSelection
     on_daysItem_AsList?: daysItem_AsListGenqlSelection
     on_linkComponent_AsList?: linkComponent_AsListGenqlSelection
@@ -858,21 +857,17 @@ export interface DaysGenqlSelection{
     _dashboardUrl?: boolean | number
     _id?: boolean | number
     _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
     _slug?: boolean | number
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
-    days?: (Days_1GenqlSelection & { __args?: {
-    /** Filter by a field. */
-    filter?: (DaysItemFilterInput | null), 
-    /** Limit the number of items returned. Defaults to 500. */
-    first?: (Scalars['Int'] | null), 
-    /** Order by a field. */
-    orderBy?: (DaysItemOrderByEnum | null), 
-    /** Skip the first n items. */
-    skip?: (Scalars['Int'] | null)} })
-    lockedDay?: boolean | number
-    unlockedDay?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: DaysItemGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: DaysItemGenqlSelection
     __typename?: boolean | number
 }
 
@@ -897,31 +892,6 @@ export interface DaysItemGenqlSelection{
 }
 
 export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null)}
-
-export interface Days_1GenqlSelection{
-    _analyticsKey?: { __args: {
-    /**
-     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
-     * 
-     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
-     */
-    scope?: (AnalyticsKeyScope | null)} } | boolean | number
-    _dashboardUrl?: boolean | number
-    _id?: boolean | number
-    _idPath?: boolean | number
-    _meta?: ListMetaGenqlSelection
-    /** The key used to search from the frontend. */
-    _searchKey?: boolean | number
-    _slug?: boolean | number
-    _slugPath?: boolean | number
-    _sys?: BlockDocumentSysGenqlSelection
-    _title?: boolean | number
-    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
-    item?: DaysItemGenqlSelection
-    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
-    items?: DaysItemGenqlSelection
-    __typename?: boolean | number
-}
 
 export interface EmailSubscriptionsGenqlSelection{
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -988,6 +958,26 @@ export interface HeaderGenqlSelection{
     __typename?: boolean | number
 }
 
+export interface IconsGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    lockedDay?: boolean | number
+    unlockedDay?: boolean | number
+    __typename?: boolean | number
+}
+
 export interface InputGenqlSelection{
     _analyticsKey?: { __args: {
     /**
@@ -1005,7 +995,6 @@ export interface InputGenqlSelection{
     _title?: boolean | number
     emailSubscriptions?: EmailSubscriptionsGenqlSelection
     iconButton?: boolean | number
-    label?: boolean | number
     __typename?: boolean | number
 }
 
@@ -1192,10 +1181,9 @@ export interface QueryGenqlSelection{
     /** Whether to include type options in the structure. */
     withTypeOptions?: (Scalars['Boolean'] | null)} } | boolean | number
     _sys?: RepoSysGenqlSelection
-    countdown?: CountdownGenqlSelection
-    days?: DaysGenqlSelection
     footer?: FooterGenqlSelection
     header?: HeaderGenqlSelection
+    icons?: IconsGenqlSelection
     site?: SiteGenqlSelection
     __typename?: boolean | number
 }
@@ -1236,6 +1224,16 @@ export interface SiteGenqlSelection{
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
     accent?: BlockColorGenqlSelection
+    countdown?: CountdownGenqlSelection
+    days?: (DaysGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (DaysItemFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (DaysItemOrderByEnum | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
     metadata?: MetadataGenqlSelection
     __typename?: boolean | number
 }
@@ -1520,10 +1518,6 @@ export interface FragmentsMap {
     root: DaysItem,
     selection: DaysItemGenqlSelection,
 }
-  Days_1: {
-    root: Days_1,
-    selection: Days_1GenqlSelection,
-}
   EmailSubscriptions: {
     root: EmailSubscriptions,
     selection: EmailSubscriptionsGenqlSelection,
@@ -1539,6 +1533,10 @@ export interface FragmentsMap {
   Header: {
     root: Header,
     selection: HeaderGenqlSelection,
+}
+  Icons: {
+    root: Icons,
+    selection: IconsGenqlSelection,
 }
   Input: {
     root: Input,

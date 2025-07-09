@@ -9,10 +9,10 @@ export const Providers = async ({
   children: React.ReactNode
 }) => {
   return (
-    <Pump queries={[{ days: { days: launchFragment } }]}>
+    <Pump queries={[{ site: { days: launchFragment } }]}>
       {async ([
         {
-          days: {
+          site: {
             days: { item }
           }
         }

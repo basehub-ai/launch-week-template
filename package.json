@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack && basehub dev",
+    "dev": "basehub dev & next dev --turbopack",
     "build": "basehub && next build",
     "start": "next start",
     "lint": "next lint"
@@ -23,5 +23,10 @@
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }

@@ -65,10 +65,13 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
       {input.emailSubscriptions.schema.map((i) => {
         return (
           <React.Fragment key={i.id}>
-            <label htmlFor={i.id} className="text-sm font-medium opacity-80">
+            <label
+              htmlFor={i.id}
+              className="text-sm font-medium opacity-80 pb-2 flex items-center"
+            >
               {i.label}
             </label>
-            <div className="dashed mt-2">
+            <div className="dashed">
               <div className="flex h-8">
                 <input
                   autoFocus
@@ -79,6 +82,7 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
                   onChange={handleChange}
                   value={formValues[i.name]}
                   className="px-3 py-2 flex-1 placeholder:text-foreground xl:text-sm bg-base placeholder:opacity-80"
+                  required
                 />
 
                 <div className="flex dashed !pr-0 !py-0">
