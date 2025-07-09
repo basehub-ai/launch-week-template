@@ -78,9 +78,6 @@ export default async function Home() {
                       <button
                         // disabled
                         className="p-2 focus-visible:border-l-transparent bg-accent text-label disabled:bg-shade-hover disabled:text-foreground"
-                        style={{
-                          borderStyle: countdown.input.borderStyle ?? 'solid'
-                        }}
                       >
                         <Icon
                           content={countdown.input.iconButton}
