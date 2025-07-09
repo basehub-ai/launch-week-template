@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --spacing-header: 64px;
+
+  --color-base: var(--base);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
+  --color-accent: var(--accent);
+  --color-border-solid: var(--border-solid);
+  --color-shade-hover: var(--shade-hover);
+  --color-label: var(--label);
+}
+
+:root {
+  /* bg */
+  --base: #FFF;
+  --background: #FAFAFA;
+
+  /* text */
+  --foreground: var(--faint);
+  --faint: #909090;
+  --dim: #303030;
+  --label: #FAFAFA;
+  
+  /* border */
+  --border-solid: #D9D9D9;
+
+  /* action */
+  --shade-hover: #E3E3E3;
+
+  font-size: 20px;
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--color-white);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* bg */
+    --base: #0C0C0C;
+    --background: #040404;
+
+    /* text */
+    --foreground: var(--faint);
+    --faint: #646464;
+    --dim: #DEDEDE;
+    --label: #FAFAFA;
+    
+    /* border */
+    --border-solid: #252525;
+
+    /* action */
+    --shade-hover: #1B1B1B;
   }
 }
 
+
 body {
+  text-transform: uppercase;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-mono);
+  letter-spacing: -1.28px;
+
+  .text-xs {
+    letter-spacing: -0.96px;
+  }
+
+  a:focus,
+  input:focus,
+  button:focus {
+    outline-style: dashed;
+    outline-color: var(--accent);
+    outline-offset: 2px;
+    outline-width: 2px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input,
+  input::placeholder {
+    text-transform: uppercase;
+    letter-spacing: normal;
+  }
+
+  .dashed {
+    padding: 1px !important;
+    background-image: repeating-linear-gradient(0deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(90deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(180deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px), repeating-linear-gradient(270deg, var(--border-solid), var(--border-solid) 5px, transparent 5px, transparent 8px, var(--border-solid) 8px);
+    background-size: 1px 100%, 100% 1px, 1px 100% , 100% 1px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
+  }
 }
