@@ -60,8 +60,23 @@ export interface Scalars {
     Int: number,
     JSON: any,
     String: string,
+    bshb_event_1736821138: `bshb_event_1736821138:${string}`,
+    schema_bshb_event_1736821138: never,
     bshb_event_52612000: `bshb_event_52612000:${string}`,
     schema_bshb_event_52612000: {email: string;},
+}
+
+export interface Analytics {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    pageviews: Pageviews
+    __typename: 'Analytics'
 }
 
 export type AnalyticsKeyScope = 'query' | 'send'
@@ -103,7 +118,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Metadata | Site | _AgentSTART | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Analytics | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Metadata | Site | _AgentSTART | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -408,6 +423,15 @@ export interface Mutation {
     __typename: 'Mutation'
 }
 
+export interface Pageviews {
+    /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
+    adminKey: Scalars['bshb_event_1736821138']
+    /** The `ingestKey` gives clients the ability to send new events to this block. Generally, it's safe to expose it to the public. */
+    ingestKey: Scalars['bshb_event_1736821138']
+    schema: Scalars['BSHBEventSchema']
+    __typename: 'Pageviews'
+}
+
 export interface Query {
     _agent: (_AgentSTART | null)
     /** Query across the custom AI agents in the repository. */
@@ -417,6 +441,7 @@ export interface Query {
     /** The structure of the repository. Used by START. */
     _structure: Scalars['JSON']
     _sys: RepoSys
+    analytics: Analytics
     footer: Footer
     header: Header
     icons: Icons
@@ -631,6 +656,25 @@ export interface linkComponent_AsList {
     __typename: 'linkComponent_AsList'
 }
 
+export interface AnalyticsGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    pageviews?: PageviewsGenqlSelection
+    __typename?: boolean | number
+}
+
 export interface BaseRichTextJsonGenqlSelection{
     blocks?: boolean | number
     content?: boolean | number
@@ -685,6 +729,7 @@ export interface BlockDocumentGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    on_Analytics?: AnalyticsGenqlSelection
     on_Countdown?: CountdownGenqlSelection
     on_Days?: DaysGenqlSelection
     on_DaysItem?: DaysItemGenqlSelection
@@ -1158,6 +1203,15 @@ export interface MutationGenqlSelection{
 
 export interface NumberFilter {eq?: (Scalars['Float'] | null),gt?: (Scalars['Float'] | null),gte?: (Scalars['Float'] | null),isNull?: (Scalars['Boolean'] | null),lt?: (Scalars['Float'] | null),lte?: (Scalars['Float'] | null),neq?: (Scalars['Float'] | null)}
 
+export interface PageviewsGenqlSelection{
+    /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
+    adminKey?: boolean | number
+    /** The `ingestKey` gives clients the ability to send new events to this block. Generally, it's safe to expose it to the public. */
+    ingestKey?: boolean | number
+    schema?: boolean | number
+    __typename?: boolean | number
+}
+
 export interface QueryGenqlSelection{
     _agent?: (_AgentSTARTGenqlSelection & { __args: {
     /** The ID of the agent. */
@@ -1181,6 +1235,7 @@ export interface QueryGenqlSelection{
     /** Whether to include type options in the structure. */
     withTypeOptions?: (Scalars['Boolean'] | null)} } | boolean | number
     _sys?: RepoSysGenqlSelection
+    analytics?: AnalyticsGenqlSelection
     footer?: FooterGenqlSelection
     header?: HeaderGenqlSelection
     icons?: IconsGenqlSelection
@@ -1458,6 +1513,10 @@ export interface linkComponent_AsListGenqlSelection{
 }
 
 export interface FragmentsMap {
+  Analytics: {
+    root: Analytics,
+    selection: AnalyticsGenqlSelection,
+}
   BaseRichTextJson: {
     root: BaseRichTextJson,
     selection: BaseRichTextJsonGenqlSelection,
@@ -1565,6 +1624,10 @@ export interface FragmentsMap {
   Mutation: {
     root: Mutation,
     selection: MutationGenqlSelection,
+}
+  Pageviews: {
+    root: Pageviews,
+    selection: PageviewsGenqlSelection,
 }
   Query: {
     root: Query,

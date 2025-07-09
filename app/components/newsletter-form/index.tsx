@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 
+import { clsx } from 'clsx'
 import { Icon } from 'basehub/react-icon'
 import { FormState, subscribe } from './action'
 import { CountdownInput } from './fragment'
@@ -14,7 +15,7 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
     null
   )
 
-  const [state, formAction] = React.useActionState(
+  const [state, formAction, isPending] = React.useActionState(
     async (_: FormState, formData: FormData) => {
       const result = await subscribe(formData)
 
@@ -87,8 +88,13 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
 
                 <div className="flex dashed !pr-0 !py-0">
                   <button
-                    disabled={!formValues[i.name]}
-                    className="p-2 focus-visible:border-l-transparent bg-accent text-label disabled:bg-shade-hover disabled:text-foreground"
+                    disabled={!formValues[i.name] || isPending}
+                    className={clsx(
+                      'p-2 focus-visible:border-l-transparent bg-accent text-label',
+                      isPending
+                        ? 'disabled:opacity-50'
+                        : 'disabled:bg-shade-hover disabled:text-foreground'
+                    )}
                   >
                     <Icon
                       content={input.iconButton}
@@ -102,14 +108,15 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
             </div>
 
             {!state.success && state.errors[i.name] ? (
-              <div className="text-red-500 text-sm mt-3">
+              <div className="text-red-500 text-sm mt-3 absolute max-w-[291px]">
                 {state.errors[i.name]}
               </div>
             ) : (
               <>
                 {!!subscribedEmail && (
-                  <div className="text-green-500 rounded text-sm mt-3">
-                    Subscribed with <strong>{subscribedEmail}</strong>
+                  <div className="text-green-500 rounded text-sm mt-3 absolute max-w-[291px]">
+                    Subscribed with{' '}
+                    <strong className="break-words">{subscribedEmail}</strong>
                   </div>
                 )}
               </>

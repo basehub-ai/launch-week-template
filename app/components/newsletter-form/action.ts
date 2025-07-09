@@ -10,17 +10,21 @@ import { parseFormData, sendEvent } from 'basehub/events'
  */
 export async function subscribe(data: FormData): Promise<FormState> {
   const {
-    countdown: {
-      input: {
-        emailSubscriptions: { ingestKey, schema }
+    site: {
+      countdown: {
+        input: {
+          emailSubscriptions: { ingestKey, schema }
+        }
       }
     }
   } = await basehub().query({
-    countdown: {
-      input: {
-        emailSubscriptions: {
-          ingestKey: true,
-          schema: true
+    site: {
+      countdown: {
+        input: {
+          emailSubscriptions: {
+            ingestKey: true,
+            schema: true
+          }
         }
       }
     }
