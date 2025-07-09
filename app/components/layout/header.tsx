@@ -75,7 +75,7 @@ export const Header = async () => {
               </div>
 
               {/* right/bottom side */}
-              <div className="flex items-end lg:items-center gap-x-1 font-medium pb-8 lg:pb-0">
+              <div className="flex items-end justify-center lg:items-center gap-x-1 font-medium pb-8 lg:pb-0 w-full max-w-[400px] sm:max-w-min">
                 {days.items.map((day, index) => {
                   const dayHasPassed = new Date(day.date) < new Date()
 
@@ -99,7 +99,7 @@ export const Header = async () => {
                               'linear-gradient(to right, transparent 50%, var(--color-faint) 50%)',
                             backgroundSize: '4px 2px'
                           }}
-                          className="h-px w-8 mb-2 lg:mb-0"
+                          className="h-px basis-8 sm:w-8 mb-2.5 lg:mb-0"
                         />
                       )}
                     </React.Fragment>
