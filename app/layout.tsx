@@ -14,7 +14,7 @@ import { Toolbar } from 'basehub/next-toolbar'
 export const dynamic = 'force-static'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { site } = await basehub({ draft: true }).query({
+  const { site } = await basehub().query({
     site: {
       metadata: {
         title: true,
