@@ -10,6 +10,7 @@ import { basehub } from 'basehub'
 import { Pump } from 'basehub/react-pump'
 import { siteOrigin } from '@/constants/routing'
 import { PageView } from './components/page-view'
+import { Toolbar } from 'basehub/next-toolbar'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { site } = await basehub({ draft: true }).query({
@@ -98,6 +99,7 @@ export default async function RootLayout({
               <Providers>{children}</Providers>
               <Footer />
 
+              <Toolbar />
               <PageView eKey={analytics.pageviews.ingestKey} />
             </body>
           </html>
