@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
@@ -21,6 +22,7 @@
   /* bg */
   --base: #fff;
   --background: #fafafa;
+  --background-raw: 250, 250, 250;
 
   /* text */
   --foreground: var(--faint);
@@ -44,6 +46,7 @@
     /* bg */
     --base: #0c0c0c;
     --background: #040404;
+    --background-raw: 4, 4, 4;
 
     /* text */
     --foreground: var(--faint);
@@ -99,6 +102,20 @@ body {
     letter-spacing: normal;
   }
 
+  .divider {
+    height: 1px;
+    background:
+      linear-gradient(to right, transparent 50%, var(--color-faint) 50%);
+    background-size: 4px 2px;
+  }
+
+  .divider-md {
+    height: 1px;
+    background:
+      linear-gradient(to right, transparent 50%, var(--color-faint) 50%);
+    background-size: 8px 4px;
+  }
+
   .dashed {
     padding: 1px !important;
     background-image: repeating-linear-gradient(
@@ -136,6 +153,10 @@ body {
     background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
+  }
+
+  .prose {
+    letter-spacing: -0.8px;
   }
 }
 

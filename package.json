@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@bsmnt/drop": "^1.2.2",
+    "@tailwindcss/typography": "^0.5.16",
     "basehub": "^9.0.21",
     "clsx": "^2.1.1",
     "geist": "^1.4.2",

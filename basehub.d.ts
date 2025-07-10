@@ -188,7 +188,7 @@ export interface BlockOgImage {
 
 
 /** Rich text block */
-export type BlockRichText = (Title) & { __isUnion?: true }
+export type BlockRichText = (Content | Manifesto | Title) & { __isUnion?: true }
 
 export interface BlockVideo {
     aspectRatio: Scalars['String']
@@ -202,6 +202,21 @@ export interface BlockVideo {
     url: Scalars['String']
     width: Scalars['Int']
     __typename: 'BlockVideo'
+}
+
+export interface Content {
+    html: Scalars['String']
+    json: ContentRichText
+    markdown: Scalars['String']
+    plainText: Scalars['String']
+    readingTime: Scalars['Int']
+    __typename: 'Content'
+}
+
+export interface ContentRichText {
+    content: Scalars['BSHBRichTextContentSchema']
+    toc: Scalars['BSHBRichTextTOCSchema']
+    __typename: 'ContentRichText'
 }
 
 export interface Countdown {
@@ -247,12 +262,15 @@ export interface DaysItem {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    content: (Content | null)
     /** ISO 8601 date string. */
     date: Scalars['String']
+    description: (Scalars['String'] | null)
+    name: Scalars['String']
     __typename: 'DaysItem'
 }
 
-export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'date__ASC' | 'date__DESC'
+export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'date__ASC' | 'date__DESC' | 'description__ASC' | 'description__DESC' | 'name__ASC' | 'name__DESC'
 
 export interface EmailSubscriptions {
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -370,6 +388,21 @@ export interface ListMeta {
     __typename: 'ListMeta'
 }
 
+export interface Manifesto {
+    html: Scalars['String']
+    json: ManifestoRichText
+    markdown: Scalars['String']
+    plainText: Scalars['String']
+    readingTime: Scalars['Int']
+    __typename: 'Manifesto'
+}
+
+export interface ManifestoRichText {
+    content: Scalars['BSHBRichTextContentSchema']
+    toc: Scalars['BSHBRichTextTOCSchema']
+    __typename: 'ManifestoRichText'
+}
+
 export type MediaBlock = (BlockAudio | BlockFile | BlockImage | BlockVideo) & { __isUnion?: true }
 
 export type MediaBlockUnion = (BlockAudio | BlockFile | BlockImage | BlockVideo) & { __isUnion?: true }
@@ -459,7 +492,7 @@ export interface RepoSys {
     __typename: 'RepoSys'
 }
 
-export type RichTextJson = (BaseRichTextJson | TitleRichText) & { __isUnion?: true }
+export type RichTextJson = (BaseRichTextJson | ContentRichText | ManifestoRichText | TitleRichText) & { __isUnion?: true }
 
 export interface Site {
     _analyticsKey: Scalars['String']
@@ -473,6 +506,7 @@ export interface Site {
     accent: BlockColor
     countdown: Countdown
     days: Days
+    manifesto: (Manifesto | null)
     metadata: Metadata
     __typename: 'Site'
 }
@@ -850,6 +884,8 @@ export interface BlockRichTextGenqlSelection{
     readingTime?: { __args: {
     /** Words per minute, defaults to average 183wpm */
     wpm?: (Scalars['Int'] | null)} } | boolean | number
+    on_Content?: ContentGenqlSelection
+    on_Manifesto?: ManifestoGenqlSelection
     on_Title?: TitleGenqlSelection
     __typename?: boolean | number
 }
@@ -865,6 +901,27 @@ export interface BlockVideoGenqlSelection{
     mimeType?: boolean | number
     url?: boolean | number
     width?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface ContentGenqlSelection{
+    html?: { __args: {
+    /** It automatically generates a unique id for each heading present in the HTML. Enabled by default. */
+    slugs?: (Scalars['Boolean'] | null), 
+    /** Inserts a table of contents at the beginning of the HTML. */
+    toc?: (Scalars['Boolean'] | null)} } | boolean | number
+    json?: ContentRichTextGenqlSelection
+    markdown?: boolean | number
+    plainText?: boolean | number
+    readingTime?: { __args: {
+    /** Words per minute, defaults to average 183wpm */
+    wpm?: (Scalars['Int'] | null)} } | boolean | number
+    __typename?: boolean | number
+}
+
+export interface ContentRichTextGenqlSelection{
+    content?: boolean | number
+    toc?: boolean | number
     __typename?: boolean | number
 }
 
@@ -931,12 +988,15 @@ export interface DaysItemGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    content?: ContentGenqlSelection
     /** ISO 8601 date string. */
     date?: boolean | number
+    description?: boolean | number
+    name?: boolean | number
     __typename?: boolean | number
 }
 
-export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null)}
+export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null),description?: (StringFilter | null),name?: (StringFilter | null)}
 
 export interface EmailSubscriptionsGenqlSelection{
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -1100,6 +1160,27 @@ export interface ListMetaGenqlSelection{
     __typename?: boolean | number
 }
 
+export interface ManifestoGenqlSelection{
+    html?: { __args: {
+    /** It automatically generates a unique id for each heading present in the HTML. Enabled by default. */
+    slugs?: (Scalars['Boolean'] | null), 
+    /** Inserts a table of contents at the beginning of the HTML. */
+    toc?: (Scalars['Boolean'] | null)} } | boolean | number
+    json?: ManifestoRichTextGenqlSelection
+    markdown?: boolean | number
+    plainText?: boolean | number
+    readingTime?: { __args: {
+    /** Words per minute, defaults to average 183wpm */
+    wpm?: (Scalars['Int'] | null)} } | boolean | number
+    __typename?: boolean | number
+}
+
+export interface ManifestoRichTextGenqlSelection{
+    content?: boolean | number
+    toc?: boolean | number
+    __typename?: boolean | number
+}
+
 export interface MediaBlockGenqlSelection{
     fileName?: boolean | number
     fileSize?: boolean | number
@@ -1257,6 +1338,8 @@ export interface RichTextJsonGenqlSelection{
     content?: boolean | number
     toc?: boolean | number
     on_BaseRichTextJson?: BaseRichTextJsonGenqlSelection
+    on_ContentRichText?: ContentRichTextGenqlSelection
+    on_ManifestoRichText?: ManifestoRichTextGenqlSelection
     on_TitleRichText?: TitleRichTextGenqlSelection
     __typename?: boolean | number
 }
@@ -1289,6 +1372,7 @@ export interface SiteGenqlSelection{
     orderBy?: (DaysItemOrderByEnum | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
+    manifesto?: ManifestoGenqlSelection
     metadata?: MetadataGenqlSelection
     __typename?: boolean | number
 }
@@ -1565,6 +1649,14 @@ export interface FragmentsMap {
     root: BlockVideo,
     selection: BlockVideoGenqlSelection,
 }
+  Content: {
+    root: Content,
+    selection: ContentGenqlSelection,
+}
+  ContentRichText: {
+    root: ContentRichText,
+    selection: ContentRichTextGenqlSelection,
+}
   Countdown: {
     root: Countdown,
     selection: CountdownGenqlSelection,
@@ -1612,6 +1704,14 @@ export interface FragmentsMap {
   ListMeta: {
     root: ListMeta,
     selection: ListMetaGenqlSelection,
+}
+  Manifesto: {
+    root: Manifesto,
+    selection: ManifestoGenqlSelection,
+}
+  ManifestoRichText: {
+    root: ManifestoRichText,
+    selection: ManifestoRichTextGenqlSelection,
 }
   MediaBlock: {
     root: MediaBlock,

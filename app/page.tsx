@@ -5,6 +5,9 @@ import { Countdown } from './components/countdown'
 import { RichText } from 'basehub/react-rich-text'
 import { NewsletterForm } from './components/newsletter-form'
 import { countdownInputFragment } from './components/newsletter-form/fragment'
+import { DayContent } from './components/day/content'
+
+export const experimental_ppr = true
 
 export default async function Home() {
   return (
@@ -20,6 +23,11 @@ export default async function Home() {
                 }
               },
               overtitle: true
+            },
+            days: {
+              items: {
+                _id: true
+              }
             }
           }
         }
@@ -34,7 +42,7 @@ export default async function Home() {
 
         return (
           <main>
-            <div className="max-w-[291px] mx-auto flex flex-col gap-6 row-start-2 pt-[140px]">
+            <div className="max-w-[291px] mx-auto flex flex-col gap-6 row-start-2 pt-[140px] mb-40">
               <div>
                 <p className="text-accent italic font-medium mb-1">
                   {!!hasCountdown &&
@@ -58,6 +66,10 @@ export default async function Home() {
 
               <NewsletterForm input={site.countdown.input} />
             </div>
+
+            {site.days.items.map((day) => (
+              <DayContent dayId={day._id} key={day._id} />
+            ))}
           </main>
         )
       }}
