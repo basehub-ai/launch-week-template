@@ -47,19 +47,21 @@ export const Header = async () => {
           <header>
             <div className="min-h-header max-w-7xl flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5 mx-auto px-4">
               {/* left/top side */}
-              <div className="flex items-center flex-wrap gap-x-2 pt-4 pb-4">
-                <Icon
-                  content={header.logo}
-                  components={{
-                    svg: (props) => <svg {...props} className="text-dim" />
-                  }}
-                />
-                <span className="text-sm font-semibold text-dim whitespace-nowrap">
-                  {header.title}
+              <div className="flex items-center flex-wrap gap-x-2 pt-4 pb-4 justify-between lg:justify-start w-full lg:w-auto">
+                <span className="flex items-center gap-x-2">
+                  <Icon
+                    content={header.logo}
+                    components={{
+                      svg: (props) => <svg {...props} className="text-dim" />
+                    }}
+                  />
+                  <span className="text-sm font-semibold text-dim whitespace-nowrap">
+                    {header.title}
+                  </span>
                 </span>
                 {Boolean(header.links.items.length) && (
-                  <div className="flex items-center gap-x-2">
-                    &ndash;
+                  <div className="flex items-center gap-x-4 lg:gap-x-2">
+                    <span className="hidden lg:block">&ndash;</span>
                     {header.links.items.map((link) => (
                       <Link
                         key={link._id}
@@ -75,7 +77,7 @@ export const Header = async () => {
               </div>
 
               {/* right/bottom side */}
-              <div className="flex items-end justify-center lg:items-center gap-x-1 font-medium pb-8 lg:pb-0 w-full max-w-[400px] sm:max-w-min">
+              <div className="flex items-end justify-between lg:items-center gap-x-1 font-medium pb-8 lg:pb-0 w-full lg:max-w-min">
                 {days.items.map((day, index) => {
                   const dayHasPassed = new Date(day.date) < new Date()
 
@@ -99,7 +101,7 @@ export const Header = async () => {
                               'linear-gradient(to right, transparent 50%, var(--color-faint) 50%)',
                             backgroundSize: '4px 2px'
                           }}
-                          className="h-px basis-8 sm:w-8 mb-2.5 lg:mb-0"
+                          className="h-px basis-8 sm:basis-12 lg:w-8 mb-2.5 lg:mb-0"
                         />
                       )}
                     </React.Fragment>

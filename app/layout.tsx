@@ -92,9 +92,10 @@ export default async function RootLayout({
             <body
               style={{
                 ['--accent' as string]: accent,
-                ['--accent-transparent' as string]: accentTransparent
+                ['--accent-transparent' as string]: accentTransparent,
+                minHeight: '100dvh'
               }}
-              className={`antialiased min-h-screen flex flex-col`}
+              className="antialiased flex flex-col"
             >
               <Header />
               <Providers>{children}</Providers>
