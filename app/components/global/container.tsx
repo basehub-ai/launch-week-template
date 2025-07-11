@@ -8,6 +8,10 @@ export const Container = ({
   children: React.ReactNode
 }) => {
   return (
-    <div className={clsx(className, 'max-w-7xl mx-auto px-4')}>{children}</div>
+    <div
+      className={clsx(className, '2xl:max-w-4xl max-w-[800px] mx-auto px-4')}
+    >
+      {children}
+    </div>
   )
 }

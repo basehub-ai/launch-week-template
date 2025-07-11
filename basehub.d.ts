@@ -64,6 +64,12 @@ export interface Scalars {
     schema_bshb_event_1736821138: never,
     bshb_event_52612000: `bshb_event_52612000:${string}`,
     schema_bshb_event_52612000: {email: string;},
+    bshb_workflow_1830275202: `bshb_workflow_1830275202:${string}`,
+    schema_bshb_workflow_1830275202: { timestamp: string, type: 'list-block.created' | 'list-block.updated', data: {
+  listBlockId: string;
+  listBlockTitle?: string;
+  blockId: string
+} },
 }
 
 export interface Analytics {
@@ -118,7 +124,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Analytics | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Metadata | Site | _AgentSTART | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Analytics | ButtonComponent | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Manifesto | Metadata | Newsletter | Site | _AgentSTART | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -177,7 +183,7 @@ export interface BlockImage {
     __typename: 'BlockImage'
 }
 
-export type BlockList = (Days | Links | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockList = (Days | Links | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockOgImage {
     height: Scalars['Int']
@@ -188,7 +194,7 @@ export interface BlockOgImage {
 
 
 /** Rich text block */
-export type BlockRichText = (Content | Manifesto | Title) & { __isUnion?: true }
+export type BlockRichText = (Body | Content | Title) & { __isUnion?: true }
 
 export interface BlockVideo {
     aspectRatio: Scalars['String']
@@ -203,6 +209,37 @@ export interface BlockVideo {
     width: Scalars['Int']
     __typename: 'BlockVideo'
 }
+
+export interface Body {
+    html: Scalars['String']
+    json: BodyRichText
+    markdown: Scalars['String']
+    plainText: Scalars['String']
+    readingTime: Scalars['Int']
+    __typename: 'Body'
+}
+
+export interface BodyRichText {
+    content: Scalars['BSHBRichTextContentSchema']
+    toc: Scalars['BSHBRichTextTOCSchema']
+    __typename: 'BodyRichText'
+}
+
+export interface ButtonComponent {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    href: Scalars['String']
+    label: Scalars['String']
+    __typename: 'ButtonComponent'
+}
+
+export type ButtonComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'href__ASC' | 'href__DESC' | 'label__ASC' | 'label__DESC'
 
 export interface Content {
     html: Scalars['String']
@@ -229,7 +266,7 @@ export interface Countdown {
     _sys: BlockDocumentSys
     _title: Scalars['String']
     input: Input
-    overtitle: (Scalars['String'] | null)
+    overtitle: Scalars['String']
     title: Title
     __typename: 'Countdown'
 }
@@ -266,11 +303,12 @@ export interface DaysItem {
     /** ISO 8601 date string. */
     date: Scalars['String']
     description: (Scalars['String'] | null)
+    isPublished: Scalars['Boolean']
     name: Scalars['String']
     __typename: 'DaysItem'
 }
 
-export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'date__ASC' | 'date__DESC' | 'description__ASC' | 'description__DESC' | 'name__ASC' | 'name__DESC'
+export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'date__ASC' | 'date__DESC' | 'description__ASC' | 'description__DESC' | 'isPublished__ASC' | 'isPublished__DESC' | 'name__ASC' | 'name__DESC'
 
 export interface EmailSubscriptions {
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -279,6 +317,12 @@ export interface EmailSubscriptions {
     ingestKey: Scalars['bshb_event_52612000']
     schema: Scalars['BSHBEventSchema']
     __typename: 'EmailSubscriptions'
+}
+
+export interface Emails {
+    /** The `webhookSecret` is used to verify the authenticity of the webhook request, and also to type the payload. */
+    webhookSecret: Scalars['bshb_workflow_1830275202']
+    __typename: 'Emails'
 }
 
 export interface Footer {
@@ -326,6 +370,7 @@ export interface Icons {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    link: (Scalars['String'] | null)
     lockedDay: Scalars['String']
     unlockedDay: Scalars['String']
     __typename: 'Icons'
@@ -389,18 +434,18 @@ export interface ListMeta {
 }
 
 export interface Manifesto {
-    html: Scalars['String']
-    json: ManifestoRichText
-    markdown: Scalars['String']
-    plainText: Scalars['String']
-    readingTime: Scalars['Int']
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    body: Body
+    button: ButtonComponent
+    title: Scalars['String']
     __typename: 'Manifesto'
-}
-
-export interface ManifestoRichText {
-    content: Scalars['BSHBRichTextContentSchema']
-    toc: Scalars['BSHBRichTextTOCSchema']
-    __typename: 'ManifestoRichText'
 }
 
 export type MediaBlock = (BlockAudio | BlockFile | BlockImage | BlockVideo) & { __isUnion?: true }
@@ -456,6 +501,19 @@ export interface Mutation {
     __typename: 'Mutation'
 }
 
+export interface Newsletter {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    emails: Emails
+    __typename: 'Newsletter'
+}
+
 export interface Pageviews {
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
     adminKey: Scalars['bshb_event_1736821138']
@@ -478,6 +536,7 @@ export interface Query {
     footer: Footer
     header: Header
     icons: Icons
+    newsletter: Newsletter
     site: Site
     __typename: 'Query'
 }
@@ -492,7 +551,7 @@ export interface RepoSys {
     __typename: 'RepoSys'
 }
 
-export type RichTextJson = (BaseRichTextJson | ContentRichText | ManifestoRichText | TitleRichText) & { __isUnion?: true }
+export type RichTextJson = (BaseRichTextJson | BodyRichText | ContentRichText | TitleRichText) & { __isUnion?: true }
 
 export interface Site {
     _analyticsKey: Scalars['String']
@@ -506,7 +565,7 @@ export interface Site {
     accent: BlockColor
     countdown: Countdown
     days: Days
-    manifesto: (Manifesto | null)
+    manifesto: Manifesto
     metadata: Metadata
     __typename: 'Site'
 }
@@ -647,9 +706,29 @@ export interface _agents {
 }
 
 export interface _components {
+    button: buttonComponent_AsList
     daysItem: daysItem_AsList
     link: linkComponent_AsList
     __typename: '_components'
+}
+
+export interface buttonComponent_AsList {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (ButtonComponent | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: ButtonComponent[]
+    __typename: 'buttonComponent_AsList'
 }
 
 export interface daysItem_AsList {
@@ -764,6 +843,7 @@ export interface BlockDocumentGenqlSelection{
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
     on_Analytics?: AnalyticsGenqlSelection
+    on_ButtonComponent?: ButtonComponentGenqlSelection
     on_Countdown?: CountdownGenqlSelection
     on_Days?: DaysGenqlSelection
     on_DaysItem?: DaysItemGenqlSelection
@@ -773,9 +853,12 @@ export interface BlockDocumentGenqlSelection{
     on_Input?: InputGenqlSelection
     on_LinkComponent?: LinkComponentGenqlSelection
     on_Links?: LinksGenqlSelection
+    on_Manifesto?: ManifestoGenqlSelection
     on_Metadata?: MetadataGenqlSelection
+    on_Newsletter?: NewsletterGenqlSelection
     on_Site?: SiteGenqlSelection
     on__AgentSTART?: _AgentSTARTGenqlSelection
+    on_buttonComponent_AsList?: buttonComponent_AsListGenqlSelection
     on_daysItem_AsList?: daysItem_AsListGenqlSelection
     on_linkComponent_AsList?: linkComponent_AsListGenqlSelection
     __typename?: boolean | number
@@ -858,6 +941,7 @@ export interface BlockListGenqlSelection{
     _title?: boolean | number
     on_Days?: DaysGenqlSelection
     on_Links?: LinksGenqlSelection
+    on_buttonComponent_AsList?: buttonComponent_AsListGenqlSelection
     on_daysItem_AsList?: daysItem_AsListGenqlSelection
     on_linkComponent_AsList?: linkComponent_AsListGenqlSelection
     __typename?: boolean | number
@@ -884,8 +968,8 @@ export interface BlockRichTextGenqlSelection{
     readingTime?: { __args: {
     /** Words per minute, defaults to average 183wpm */
     wpm?: (Scalars['Int'] | null)} } | boolean | number
+    on_Body?: BodyGenqlSelection
     on_Content?: ContentGenqlSelection
-    on_Manifesto?: ManifestoGenqlSelection
     on_Title?: TitleGenqlSelection
     __typename?: boolean | number
 }
@@ -903,6 +987,49 @@ export interface BlockVideoGenqlSelection{
     width?: boolean | number
     __typename?: boolean | number
 }
+
+export interface BodyGenqlSelection{
+    html?: { __args: {
+    /** It automatically generates a unique id for each heading present in the HTML. Enabled by default. */
+    slugs?: (Scalars['Boolean'] | null), 
+    /** Inserts a table of contents at the beginning of the HTML. */
+    toc?: (Scalars['Boolean'] | null)} } | boolean | number
+    json?: BodyRichTextGenqlSelection
+    markdown?: boolean | number
+    plainText?: boolean | number
+    readingTime?: { __args: {
+    /** Words per minute, defaults to average 183wpm */
+    wpm?: (Scalars['Int'] | null)} } | boolean | number
+    __typename?: boolean | number
+}
+
+export interface BodyRichTextGenqlSelection{
+    content?: boolean | number
+    toc?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface ButtonComponentGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    href?: boolean | number
+    label?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface ButtonComponentFilterInput {AND?: (ButtonComponentFilterInput | null),OR?: (ButtonComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),href?: (StringFilter | null),label?: (StringFilter | null)}
 
 export interface ContentGenqlSelection{
     html?: { __args: {
@@ -992,11 +1119,12 @@ export interface DaysItemGenqlSelection{
     /** ISO 8601 date string. */
     date?: boolean | number
     description?: boolean | number
+    isPublished?: boolean | number
     name?: boolean | number
     __typename?: boolean | number
 }
 
-export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null),description?: (StringFilter | null),name?: (StringFilter | null)}
+export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null),description?: (StringFilter | null),isPublished?: (Scalars['Boolean'] | null),name?: (StringFilter | null)}
 
 export interface EmailSubscriptionsGenqlSelection{
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -1004,6 +1132,12 @@ export interface EmailSubscriptionsGenqlSelection{
     /** The `ingestKey` gives clients the ability to send new events to this block. Generally, it's safe to expose it to the public. */
     ingestKey?: boolean | number
     schema?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface EmailsGenqlSelection{
+    /** The `webhookSecret` is used to verify the authenticity of the webhook request, and also to type the payload. */
+    webhookSecret?: boolean | number
     __typename?: boolean | number
 }
 
@@ -1078,6 +1212,7 @@ export interface IconsGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    link?: boolean | number
     lockedDay?: boolean | number
     unlockedDay?: boolean | number
     __typename?: boolean | number
@@ -1161,23 +1296,23 @@ export interface ListMetaGenqlSelection{
 }
 
 export interface ManifestoGenqlSelection{
-    html?: { __args: {
-    /** It automatically generates a unique id for each heading present in the HTML. Enabled by default. */
-    slugs?: (Scalars['Boolean'] | null), 
-    /** Inserts a table of contents at the beginning of the HTML. */
-    toc?: (Scalars['Boolean'] | null)} } | boolean | number
-    json?: ManifestoRichTextGenqlSelection
-    markdown?: boolean | number
-    plainText?: boolean | number
-    readingTime?: { __args: {
-    /** Words per minute, defaults to average 183wpm */
-    wpm?: (Scalars['Int'] | null)} } | boolean | number
-    __typename?: boolean | number
-}
-
-export interface ManifestoRichTextGenqlSelection{
-    content?: boolean | number
-    toc?: boolean | number
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    body?: BodyGenqlSelection
+    button?: ButtonComponentGenqlSelection
+    title?: boolean | number
     __typename?: boolean | number
 }
 
@@ -1282,6 +1417,25 @@ export interface MutationGenqlSelection{
     __typename?: boolean | number
 }
 
+export interface NewsletterGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    emails?: EmailsGenqlSelection
+    __typename?: boolean | number
+}
+
 export interface NumberFilter {eq?: (Scalars['Float'] | null),gt?: (Scalars['Float'] | null),gte?: (Scalars['Float'] | null),isNull?: (Scalars['Boolean'] | null),lt?: (Scalars['Float'] | null),lte?: (Scalars['Float'] | null),neq?: (Scalars['Float'] | null)}
 
 export interface PageviewsGenqlSelection{
@@ -1320,6 +1474,7 @@ export interface QueryGenqlSelection{
     footer?: FooterGenqlSelection
     header?: HeaderGenqlSelection
     icons?: IconsGenqlSelection
+    newsletter?: NewsletterGenqlSelection
     site?: SiteGenqlSelection
     __typename?: boolean | number
 }
@@ -1338,8 +1493,8 @@ export interface RichTextJsonGenqlSelection{
     content?: boolean | number
     toc?: boolean | number
     on_BaseRichTextJson?: BaseRichTextJsonGenqlSelection
+    on_BodyRichText?: BodyRichTextGenqlSelection
     on_ContentRichText?: ContentRichTextGenqlSelection
-    on_ManifestoRichText?: ManifestoRichTextGenqlSelection
     on_TitleRichText?: TitleRichTextGenqlSelection
     __typename?: boolean | number
 }
@@ -1525,6 +1680,15 @@ export interface _agentsGenqlSelection{
 }
 
 export interface _componentsGenqlSelection{
+    button?: (buttonComponent_AsListGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (ButtonComponentFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (ButtonComponentOrderByEnum | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
     daysItem?: (daysItem_AsListGenqlSelection & { __args?: {
     /** Filter by a field. */
     filter?: (DaysItemFilterInput | null), 
@@ -1543,6 +1707,31 @@ export interface _componentsGenqlSelection{
     orderBy?: (LinkComponentOrderByEnum | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
+    __typename?: boolean | number
+}
+
+export interface buttonComponent_AsListGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: ButtonComponentGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: ButtonComponentGenqlSelection
     __typename?: boolean | number
 }
 
@@ -1649,6 +1838,18 @@ export interface FragmentsMap {
     root: BlockVideo,
     selection: BlockVideoGenqlSelection,
 }
+  Body: {
+    root: Body,
+    selection: BodyGenqlSelection,
+}
+  BodyRichText: {
+    root: BodyRichText,
+    selection: BodyRichTextGenqlSelection,
+}
+  ButtonComponent: {
+    root: ButtonComponent,
+    selection: ButtonComponentGenqlSelection,
+}
   Content: {
     root: Content,
     selection: ContentGenqlSelection,
@@ -1672,6 +1873,10 @@ export interface FragmentsMap {
   EmailSubscriptions: {
     root: EmailSubscriptions,
     selection: EmailSubscriptionsGenqlSelection,
+}
+  Emails: {
+    root: Emails,
+    selection: EmailsGenqlSelection,
 }
   Footer: {
     root: Footer,
@@ -1709,10 +1914,6 @@ export interface FragmentsMap {
     root: Manifesto,
     selection: ManifestoGenqlSelection,
 }
-  ManifestoRichText: {
-    root: ManifestoRichText,
-    selection: ManifestoRichTextGenqlSelection,
-}
   MediaBlock: {
     root: MediaBlock,
     selection: MediaBlockGenqlSelection,
@@ -1724,6 +1925,10 @@ export interface FragmentsMap {
   Mutation: {
     root: Mutation,
     selection: MutationGenqlSelection,
+}
+  Newsletter: {
+    root: Newsletter,
+    selection: NewsletterGenqlSelection,
 }
   Pageviews: {
     root: Pageviews,
@@ -1792,6 +1997,10 @@ export interface FragmentsMap {
   _components: {
     root: _components,
     selection: _componentsGenqlSelection,
+}
+  buttonComponent_AsList: {
+    root: buttonComponent_AsList,
+    selection: buttonComponent_AsListGenqlSelection,
 }
   daysItem_AsList: {
     root: daysItem_AsList,

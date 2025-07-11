@@ -1,13 +1,15 @@
 import * as React from 'react'
 
 import { Pump } from 'basehub/react-pump'
-import { Countdown } from './components/countdown'
+import { Countdown, CountdownOrLinkToDay } from './components/countdown'
 import { RichText } from 'basehub/react-rich-text'
 import { NewsletterForm } from './components/newsletter-form'
 import { countdownInputFragment } from './components/newsletter-form/fragment'
 import { DayContent } from './components/day/content'
 
-export const experimental_ppr = true
+import clsx from 'clsx'
+import { Container } from './components/global/container'
+import { dayFragment } from './components/day/fragment'
 
 export default async function Home() {
   return (
@@ -24,11 +26,7 @@ export default async function Home() {
               },
               overtitle: true
             },
-            days: {
-              items: {
-                _id: true
-              }
-            }
+            days: { items: dayFragment }
           }
         }
       ]}
@@ -36,27 +34,19 @@ export default async function Home() {
       {async ([{ site }]) => {
         'use server'
 
-        const hasCountdown = Boolean(
-          site.countdown.overtitle?.includes(`{{countdown}}`)
-        )
-
         return (
           <main>
-            <div className="max-w-[291px] mx-auto flex flex-col gap-6 row-start-2 pt-[140px] mb-40">
-              <div>
-                <p className="text-accent italic font-medium mb-1">
-                  {!!hasCountdown &&
-                    site.countdown.overtitle
-                      ?.split(`{{countdown}}`)
-                      .map((seg, index) => {
-                        return (
-                          <React.Fragment key={seg + index}>
-                            {index === 1 && <Countdown />}
-                            <span>{seg}</span>
-                          </React.Fragment>
-                        )
-                      })}
-                </p>
+            <Container
+              className={clsx(
+                'mx-auto flex flex-col gap-6 row-start-2 pt-[140px] pb-32 lg:pt-52 2xl:pt-64',
+                site.days.items.length > 0 && '2xl:h-[768px]'
+              )}
+            >
+              <div className="max-w-[291px] mx-auto w-full">
+                <CountdownOrLinkToDay
+                  days={site.days.items}
+                  overtitle={site.countdown.overtitle}
+                />
                 <h1 className="font-semibold mb-6 text-dim text-xl">
                   <RichText components={{ p: (props) => <p {...props} /> }}>
                     {site.countdown.title.json.content}
@@ -64,11 +54,18 @@ export default async function Home() {
                 </h1>
               </div>
 
-              <NewsletterForm input={site.countdown.input} />
-            </div>
+              <NewsletterForm
+                input={site.countdown.input}
+                className="max-w-[291px] mx-auto w-full"
+              />
+            </Container>
 
-            {site.days.items.map((day) => (
-              <DayContent dayId={day._id} key={day._id} />
+            {site.days.items.map((day, index) => (
+              <DayContent
+                key={day._id}
+                dayId={day._id}
+                isLastDay={index === site.days.items.length - 1}
+              />
             ))}
           </main>
         )

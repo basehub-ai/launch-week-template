@@ -5,6 +5,7 @@ import { Pump } from 'basehub/react-pump'
 import Link from 'next/link'
 import clsx from 'clsx'
 import { Container } from '../global/container'
+import { getCurrentDay } from '@/app/utils/days'
 
 export const Header = async () => {
   const date = new Date()
@@ -28,7 +29,7 @@ export const Header = async () => {
           site: {
             days: {
               __args: { orderBy: 'date__ASC' },
-              items: { _id: true, _title: true, date: true }
+              items: { _id: true, _title: true, date: true, isPublished: true }
             }
           },
           icons: {
@@ -47,17 +48,14 @@ export const Header = async () => {
       ]) => {
         'use server'
 
-        const currentDay = days.items.find(
-          (day) => new Date(day.date).getDate() === date.getDate()
-        )
+        const currentDay = getCurrentDay(days.items)
 
         return (
           <header
-            className="sticky top-0"
+            className="sticky top-0 z-50"
             style={{
               background:
                 'linear-gradient(180deg, var(--color-background) 30.29%, rgba(var(--background-raw), 0.70) 60.58%, rgba(var(--background-raw), 0.00) 100%)'
-              // backdropFilter: 'blur(0px)'
             }}
           >
             <Container className="min-h-header flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5">
@@ -93,7 +91,8 @@ export const Header = async () => {
 
               <div className="flex items-end justify-between lg:items-center gap-x-1.5 font-medium pb-8 lg:pb-0 w-full lg:max-w-min">
                 {days.items.map((day, index) => {
-                  const dayHasPassed = new Date(day.date) < date
+                  const dayHasPassed =
+                    new Date(day.date) < date && day.isPublished
                   const isCurrentDay = currentDay?._id === day._id
 
                   return (
