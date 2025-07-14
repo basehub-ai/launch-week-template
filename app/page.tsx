@@ -123,7 +123,7 @@ export default async function Home() {
                           <NewsletterForm
                             subscriptions={{ emailSubscriptions }}
                             iconButton={paperPlane}
-                            className="max-w-[252px] w-full pb-6"
+                            className="lg:max-w-[256px] w-full pb-6"
                           />
                         </div>
                       </div>
