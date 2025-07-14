@@ -19,7 +19,9 @@ export const ClientProvider = ({
     )
     const lastDayHeading = headingForThisDay[headingForThisDay.length - 1]
 
-    if (lastDayHeading) {
+    const urlHasHash = window.location.hash
+
+    if (lastDayHeading && !urlHasHash) {
       lastDayHeading.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
