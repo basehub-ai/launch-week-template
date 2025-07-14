@@ -65,7 +65,7 @@ export interface Scalars {
     bshb_event_52612000: `bshb_event_52612000:${string}`,
     schema_bshb_event_52612000: {email: string;},
     bshb_workflow_1830275202: `bshb_workflow_1830275202:${string}`,
-    schema_bshb_workflow_1830275202: { timestamp: string, type: 'list-block.created' | 'list-block.updated', data: {
+    schema_bshb_workflow_1830275202: { timestamp: string, type: 'list-block.updated', data: {
   listBlockId: string;
   listBlockTitle?: string;
   blockId: string
@@ -124,7 +124,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Analytics | ButtonComponent | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Manifesto | Metadata | Newsletter | Site | _AgentSTART | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Analytics | ButtonComponent | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Manifesto | Metadata | Newsletter | Site | SocialLinkComponent | SocialLinks | _AgentStart | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList | socialLinkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -183,7 +183,7 @@ export interface BlockImage {
     __typename: 'BlockImage'
 }
 
-export type BlockList = (Days | Links | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList) & { __isUnion?: true }
+export type BlockList = (Days | Links | SocialLinks | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList | socialLinkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockOgImage {
     height: Scalars['Int']
@@ -299,16 +299,19 @@ export interface DaysItem {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
-    content: (Content | null)
+    content: Content
     /** ISO 8601 date string. */
     date: Scalars['String']
     description: (Scalars['String'] | null)
+    emailSent: Scalars['Boolean']
+    emailSubject: Scalars['String']
     isPublished: Scalars['Boolean']
+    links: (LinkComponent[] | null)
     name: Scalars['String']
     __typename: 'DaysItem'
 }
 
-export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'date__ASC' | 'date__DESC' | 'description__ASC' | 'description__DESC' | 'isPublished__ASC' | 'isPublished__DESC' | 'name__ASC' | 'name__DESC'
+export type DaysItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'content__ASC' | 'content__DESC' | 'date__ASC' | 'date__DESC' | 'description__ASC' | 'description__DESC' | 'emailSent__ASC' | 'emailSent__DESC' | 'emailSubject__ASC' | 'emailSubject__DESC' | 'isPublished__ASC' | 'isPublished__DESC' | 'links__ASC' | 'links__DESC' | 'name__ASC' | 'name__DESC'
 
 export interface EmailSubscriptions {
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -370,8 +373,9 @@ export interface Icons {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
-    link: (Scalars['String'] | null)
+    link: Scalars['String']
     lockedDay: Scalars['String']
+    paperPlane: Scalars['String']
     unlockedDay: Scalars['String']
     __typename: 'Icons'
 }
@@ -385,7 +389,6 @@ export interface Input {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
-    emailSubscriptions: EmailSubscriptions
     iconButton: Scalars['String']
     __typename: 'Input'
 }
@@ -400,11 +403,12 @@ export interface LinkComponent {
     _sys: BlockDocumentSys
     _title: Scalars['String']
     href: Scalars['String']
+    label: (Scalars['String'] | null)
     target: (Scalars['BSHBSelect_1921864970'] | null)
     __typename: 'LinkComponent'
 }
 
-export type LinkComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'href__ASC' | 'href__DESC' | 'target__ASC' | 'target__DESC'
+export type LinkComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'href__ASC' | 'href__DESC' | 'label__ASC' | 'label__DESC' | 'target__ASC' | 'target__DESC'
 
 export interface Links {
     _analyticsKey: Scalars['String']
@@ -510,7 +514,11 @@ export interface Newsletter {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    emailFrom: Scalars['String']
+    emailSubscriptions: EmailSubscriptions
+    emailVideoThumb: BlockImage
     emails: Emails
+    socialLinks: SocialLinks
     __typename: 'Newsletter'
 }
 
@@ -524,7 +532,7 @@ export interface Pageviews {
 }
 
 export interface Query {
-    _agent: (_AgentSTART | null)
+    _agent: (_AgentStart | null)
     /** Query across the custom AI agents in the repository. */
     _agents: _agents
     /** Query across all of the instances of a component. Pass in filters and sorts if you want, and get each instance via the `items` key. */
@@ -570,6 +578,41 @@ export interface Site {
     __typename: 'Site'
 }
 
+export interface SocialLinkComponent {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    image: BlockImage
+    url: Scalars['String']
+    __typename: 'SocialLinkComponent'
+}
+
+export type SocialLinkComponentOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'image__ASC' | 'image__DESC' | 'url__ASC' | 'url__DESC'
+
+export interface SocialLinks {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (SocialLinkComponent | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: SocialLinkComponent[]
+    __typename: 'SocialLinks'
+}
+
 export interface Title {
     html: Scalars['String']
     json: TitleRichText
@@ -607,7 +650,7 @@ export interface Variant {
     __typename: 'Variant'
 }
 
-export interface _AgentSTART {
+export interface _AgentStart {
     _agentKey: Scalars['String']
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
@@ -632,7 +675,7 @@ export interface _AgentSTART {
     searchTheWeb: Scalars['Boolean']
     slackInstallUrl: Scalars['String']
     systemPrompt: Scalars['String']
-    __typename: '_AgentSTART'
+    __typename: '_AgentStart'
 }
 
 export interface _BranchInfo {
@@ -701,7 +744,7 @@ export type _ResolveTargetsWithEnum = 'id' | 'objectName'
 export type _StructureFormatEnum = 'json' | 'xml'
 
 export interface _agents {
-    start: _AgentSTART
+    start: _AgentStart
     __typename: '_agents'
 }
 
@@ -709,6 +752,7 @@ export interface _components {
     button: buttonComponent_AsList
     daysItem: daysItem_AsList
     link: linkComponent_AsList
+    socialLink: socialLinkComponent_AsList
     __typename: '_components'
 }
 
@@ -767,6 +811,25 @@ export interface linkComponent_AsList {
     /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
     items: LinkComponent[]
     __typename: 'linkComponent_AsList'
+}
+
+export interface socialLinkComponent_AsList {
+    _analyticsKey: Scalars['String']
+    _dashboardUrl: Scalars['String']
+    _id: Scalars['String']
+    _idPath: Scalars['String']
+    _meta: ListMeta
+    /** The key used to search from the frontend. */
+    _searchKey: Scalars['String']
+    _slug: Scalars['String']
+    _slugPath: Scalars['String']
+    _sys: BlockDocumentSys
+    _title: Scalars['String']
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item: (SocialLinkComponent | null)
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items: SocialLinkComponent[]
+    __typename: 'socialLinkComponent_AsList'
 }
 
 export interface AnalyticsGenqlSelection{
@@ -857,10 +920,13 @@ export interface BlockDocumentGenqlSelection{
     on_Metadata?: MetadataGenqlSelection
     on_Newsletter?: NewsletterGenqlSelection
     on_Site?: SiteGenqlSelection
-    on__AgentSTART?: _AgentSTARTGenqlSelection
+    on_SocialLinkComponent?: SocialLinkComponentGenqlSelection
+    on_SocialLinks?: SocialLinksGenqlSelection
+    on__AgentStart?: _AgentStartGenqlSelection
     on_buttonComponent_AsList?: buttonComponent_AsListGenqlSelection
     on_daysItem_AsList?: daysItem_AsListGenqlSelection
     on_linkComponent_AsList?: linkComponent_AsListGenqlSelection
+    on_socialLinkComponent_AsList?: socialLinkComponent_AsListGenqlSelection
     __typename?: boolean | number
 }
 
@@ -941,9 +1007,11 @@ export interface BlockListGenqlSelection{
     _title?: boolean | number
     on_Days?: DaysGenqlSelection
     on_Links?: LinksGenqlSelection
+    on_SocialLinks?: SocialLinksGenqlSelection
     on_buttonComponent_AsList?: buttonComponent_AsListGenqlSelection
     on_daysItem_AsList?: daysItem_AsListGenqlSelection
     on_linkComponent_AsList?: linkComponent_AsListGenqlSelection
+    on_socialLinkComponent_AsList?: socialLinkComponent_AsListGenqlSelection
     __typename?: boolean | number
 }
 
@@ -1119,12 +1187,17 @@ export interface DaysItemGenqlSelection{
     /** ISO 8601 date string. */
     date?: boolean | number
     description?: boolean | number
+    emailSent?: boolean | number
+    emailSubject?: boolean | number
     isPublished?: boolean | number
+    links?: LinkComponentGenqlSelection
     name?: boolean | number
     __typename?: boolean | number
 }
 
-export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null),description?: (StringFilter | null),isPublished?: (Scalars['Boolean'] | null),name?: (StringFilter | null)}
+export interface DaysItemFilterInput {AND?: (DaysItemFilterInput | null),OR?: (DaysItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),date?: (DateFilter | null),description?: (StringFilter | null),emailSent?: (Scalars['Boolean'] | null),emailSubject?: (StringFilter | null),isPublished?: (Scalars['Boolean'] | null),links?: (DaysItemFilterInput__links_0___link | null),name?: (StringFilter | null)}
+
+export interface DaysItemFilterInput__links_0___link {_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),href?: (StringFilter | null),label?: (StringFilter | null),target?: (SelectFilter | null)}
 
 export interface EmailSubscriptionsGenqlSelection{
     /** The `adminKey` gives clients the ability to query, delete and update this block's data. **It's not meant to be exposed to the public.** */
@@ -1214,6 +1287,7 @@ export interface IconsGenqlSelection{
     _title?: boolean | number
     link?: boolean | number
     lockedDay?: boolean | number
+    paperPlane?: boolean | number
     unlockedDay?: boolean | number
     __typename?: boolean | number
 }
@@ -1233,7 +1307,6 @@ export interface InputGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
-    emailSubscriptions?: EmailSubscriptionsGenqlSelection
     iconButton?: boolean | number
     __typename?: boolean | number
 }
@@ -1254,11 +1327,12 @@ export interface LinkComponentGenqlSelection{
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
     href?: boolean | number
+    label?: boolean | number
     target?: boolean | number
     __typename?: boolean | number
 }
 
-export interface LinkComponentFilterInput {AND?: (LinkComponentFilterInput | null),OR?: (LinkComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),href?: (StringFilter | null),target?: (SelectFilter | null)}
+export interface LinkComponentFilterInput {AND?: (LinkComponentFilterInput | null),OR?: (LinkComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),href?: (StringFilter | null),label?: (StringFilter | null),target?: (SelectFilter | null)}
 
 export interface LinksGenqlSelection{
     _analyticsKey?: { __args: {
@@ -1432,7 +1506,19 @@ export interface NewsletterGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    emailFrom?: boolean | number
+    emailSubscriptions?: EmailSubscriptionsGenqlSelection
+    emailVideoThumb?: BlockImageGenqlSelection
     emails?: EmailsGenqlSelection
+    socialLinks?: (SocialLinksGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (SocialLinkComponentFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (SocialLinkComponentOrderByEnum | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
 }
 
@@ -1448,7 +1534,7 @@ export interface PageviewsGenqlSelection{
 }
 
 export interface QueryGenqlSelection{
-    _agent?: (_AgentSTARTGenqlSelection & { __args: {
+    _agent?: (_AgentStartGenqlSelection & { __args: {
     /** The ID of the agent. */
     id: Scalars['String']} })
     /** Query across the custom AI agents in the repository. */
@@ -1532,6 +1618,53 @@ export interface SiteGenqlSelection{
     __typename?: boolean | number
 }
 
+export interface SocialLinkComponentGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    image?: BlockImageGenqlSelection
+    url?: boolean | number
+    __typename?: boolean | number
+}
+
+export interface SocialLinkComponentFilterInput {AND?: (SocialLinkComponentFilterInput | null),OR?: (SocialLinkComponentFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null),url?: (StringFilter | null)}
+
+export interface SocialLinksGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: SocialLinkComponentGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: SocialLinkComponentGenqlSelection
+    __typename?: boolean | number
+}
+
 export interface StringFilter {contains?: (Scalars['String'] | null),endsWith?: (Scalars['String'] | null),eq?: (Scalars['String'] | null),in?: (Scalars['String'][] | null),isNull?: (Scalars['Boolean'] | null),matches?: (StringMatchesFilter | null),notEq?: (Scalars['String'] | null),notIn?: (Scalars['String'][] | null),startsWith?: (Scalars['String'] | null)}
 
 export interface StringMatchesFilter {caseSensitive?: (Scalars['Boolean'] | null),pattern: Scalars['String']}
@@ -1579,7 +1712,7 @@ export interface VariantGenqlSelection{
     __typename?: boolean | number
 }
 
-export interface _AgentSTARTGenqlSelection{
+export interface _AgentStartGenqlSelection{
     _agentKey?: boolean | number
     _analyticsKey?: { __args: {
     /**
@@ -1675,7 +1808,7 @@ export interface _PlaygroundInfoGenqlSelection{
 }
 
 export interface _agentsGenqlSelection{
-    start?: _AgentSTARTGenqlSelection
+    start?: _AgentStartGenqlSelection
     __typename?: boolean | number
 }
 
@@ -1705,6 +1838,15 @@ export interface _componentsGenqlSelection{
     first?: (Scalars['Int'] | null), 
     /** Order by a field. */
     orderBy?: (LinkComponentOrderByEnum | null), 
+    /** Skip the first n items. */
+    skip?: (Scalars['Int'] | null)} })
+    socialLink?: (socialLinkComponent_AsListGenqlSelection & { __args?: {
+    /** Filter by a field. */
+    filter?: (SocialLinkComponentFilterInput | null), 
+    /** Limit the number of items returned. Defaults to 500. */
+    first?: (Scalars['Int'] | null), 
+    /** Order by a field. */
+    orderBy?: (SocialLinkComponentOrderByEnum | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
@@ -1782,6 +1924,31 @@ export interface linkComponent_AsListGenqlSelection{
     item?: LinkComponentGenqlSelection
     /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
     items?: LinkComponentGenqlSelection
+    __typename?: boolean | number
+}
+
+export interface socialLinkComponent_AsListGenqlSelection{
+    _analyticsKey?: { __args: {
+    /**
+     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
+     * 
+     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
+     */
+    scope?: (AnalyticsKeyScope | null)} } | boolean | number
+    _dashboardUrl?: boolean | number
+    _id?: boolean | number
+    _idPath?: boolean | number
+    _meta?: ListMetaGenqlSelection
+    /** The key used to search from the frontend. */
+    _searchKey?: boolean | number
+    _slug?: boolean | number
+    _slugPath?: boolean | number
+    _sys?: BlockDocumentSysGenqlSelection
+    _title?: boolean | number
+    /** Returns the first item in the list, or null if the list is empty. Useful when you expect only one result. */
+    item?: SocialLinkComponentGenqlSelection
+    /** Returns the list of items after filtering and paginating according to the arguments sent by the client. */
+    items?: SocialLinkComponentGenqlSelection
     __typename?: boolean | number
 }
 
@@ -1950,6 +2117,14 @@ export interface FragmentsMap {
     root: Site,
     selection: SiteGenqlSelection,
 }
+  SocialLinkComponent: {
+    root: SocialLinkComponent,
+    selection: SocialLinkComponentGenqlSelection,
+}
+  SocialLinks: {
+    root: SocialLinks,
+    selection: SocialLinksGenqlSelection,
+}
   Title: {
     root: Title,
     selection: TitleGenqlSelection,
@@ -1966,9 +2141,9 @@ export interface FragmentsMap {
     root: Variant,
     selection: VariantGenqlSelection,
 }
-  _AgentSTART: {
-    root: _AgentSTART,
-    selection: _AgentSTARTGenqlSelection,
+  _AgentStart: {
+    root: _AgentStart,
+    selection: _AgentStartGenqlSelection,
 }
   _BranchInfo: {
     root: _BranchInfo,
@@ -2009,5 +2184,9 @@ export interface FragmentsMap {
   linkComponent_AsList: {
     root: linkComponent_AsList,
     selection: linkComponent_AsListGenqlSelection,
+}
+  socialLinkComponent_AsList: {
+    root: socialLinkComponent_AsList,
+    selection: socialLinkComponent_AsListGenqlSelection,
 }
 }

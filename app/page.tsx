@@ -1,24 +1,28 @@
 import * as React from 'react'
+import clsx from 'clsx'
 
 import { Pump } from 'basehub/react-pump'
 import { Countdown, CountdownOrLinkToDay } from './components/countdown'
 import { RichText } from 'basehub/react-rich-text'
 import { NewsletterForm } from './components/newsletter-form'
-import { countdownInputFragment } from './components/newsletter-form/fragment'
+import { newsletterFragment } from './components/newsletter-form/fragment'
 import { DayContent } from './components/day/content'
 
-import clsx from 'clsx'
 import { Container } from './components/global/container'
 import { dayFragment } from './components/day/fragment'
+import { ClientProvider } from './components/global/client-provider'
 
 export default async function Home() {
   return (
     <Pump
       queries={[
         {
+          icons: {
+            paperPlane: true
+          },
+          newsletter: newsletterFragment,
           site: {
             countdown: {
-              input: countdownInputFragment,
               title: {
                 json: {
                   content: true
@@ -28,18 +32,48 @@ export default async function Home() {
             },
             days: { items: dayFragment }
           }
+        },
+        {
+          site: {
+            days: {
+              __args: {
+                orderBy: 'date__ASC' as const,
+                filter: { isPublished: false },
+                first: 1
+              },
+              item: {
+                _title: true,
+                date: true
+              }
+            }
+          }
         }
       ]}
     >
-      {async ([{ site }]) => {
+      {async ([
+        {
+          icons: { paperPlane },
+          newsletter: { emailSubscriptions },
+          site
+        },
+        {
+          site: {
+            days: { item: upcomingDay }
+          }
+        }
+      ]) => {
         'use server'
+
+        const publishedDays = site.days.items.filter((day) => day.isPublished)
 
         return (
           <main>
             <Container
               className={clsx(
-                'mx-auto flex flex-col gap-6 row-start-2 pt-[140px] pb-32 lg:pt-52 2xl:pt-64',
-                site.days.items.length > 0 && '2xl:h-[768px]'
+                'mx-auto flex flex-col gap-6 row-start-2',
+                publishedDays.length > 0
+                  ? '2xl:h-[768px] pb-32 lg:pt-52 2xl:pt-64'
+                  : 'pt-[140px]'
               )}
             >
               <div className="max-w-[291px] mx-auto w-full">
@@ -55,18 +89,49 @@ export default async function Home() {
               </div>
 
               <NewsletterForm
-                input={site.countdown.input}
+                iconButton={paperPlane}
+                subscriptions={{ emailSubscriptions }}
                 className="max-w-[291px] mx-auto w-full"
               />
             </Container>
 
-            {site.days.items.map((day, index) => (
-              <DayContent
-                key={day._id}
-                dayId={day._id}
-                isLastDay={index === site.days.items.length - 1}
-              />
-            ))}
+            {publishedDays.map((day, index) => {
+              return (
+                <DayContent
+                  key={day._id}
+                  dayId={day._id}
+                  isLastDay={index === site.days.items.length - 1}
+                />
+              )
+            })}
+
+            {!!upcomingDay && publishedDays.length !== 0 && (
+              <ClientProvider
+                startDate={new Date()}
+                endDate={
+                  upcomingDay?.date ? new Date(upcomingDay.date) : new Date()
+                }
+              >
+                <Container>
+                  <div className="dashed">
+                    <div className="p-10 binary">
+                      <div className="dashed">
+                        <div className="px-10 py-8 bg-background flex justify-between items-center">
+                          <p className="underline decoration-dashed text-dim font-bold text-sm md:text-base">
+                            {upcomingDay._title} starts in <Countdown />
+                          </p>
+                          <NewsletterForm
+                            subscriptions={{ emailSubscriptions }}
+                            iconButton={paperPlane}
+                            className="max-w-[252px] w-full pb-6"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+              </ClientProvider>
+            )}
           </main>
         )
       }}

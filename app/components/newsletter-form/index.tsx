@@ -6,15 +6,17 @@ import { useId } from '@radix-ui/react-id'
 import { clsx } from 'clsx'
 import { Icon } from 'basehub/react-icon'
 import { FormState, subscribe } from './action'
-import { CountdownInput } from './fragment'
+import { NewsletterSubscriptions } from './fragment'
 
 const INITIAL_STATE: FormState = { success: true }
 
 export const NewsletterForm = ({
-  input,
+  iconButton,
+  subscriptions: { emailSubscriptions },
   className = ''
 }: {
-  input: CountdownInput
+  iconButton: string
+  subscriptions: NewsletterSubscriptions
   className?: string
 }) => {
   const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({})
@@ -47,7 +49,7 @@ export const NewsletterForm = ({
   const [formValues, setFormValues] = React.useState(
     () =>
       Object.fromEntries(
-        input.emailSubscriptions.schema.map((i) => [i.name, ''])
+        emailSubscriptions.schema.map((i) => [i.name, ''])
       ) as Record<string, string>
   )
 
@@ -73,7 +75,7 @@ export const NewsletterForm = ({
       action={formAction}
       className={clsx('relative overflow-x-clip', className)}
     >
-      {input.emailSubscriptions.schema.map((i) => {
+      {emailSubscriptions.schema.map((i) => {
         const inputId = i.id + '-' + useId()
 
         return (
@@ -110,7 +112,7 @@ export const NewsletterForm = ({
                     )}
                   >
                     <Icon
-                      content={input.iconButton}
+                      content={iconButton}
                       components={{
                         svg: (props) => <svg {...props} className="size-3.5" />
                       }}

@@ -8,6 +8,7 @@ import { getCurrentDay } from '../utils/days'
 
 export const Countdown = () => {
   const [hydrated, setHydrated] = React.useState(false)
+  const hasStarted = useCountdownStore()((s) => s.isComplete)
   const remaining = useCountdownStore()((s) => s.humanTimeRemaining)
 
   const formattedTimeLeft = React.useMemo(() => {
@@ -24,8 +25,8 @@ export const Countdown = () => {
   }, [])
 
   return (
-    <span className="tabular-nums" suppressHydrationWarning>
-      {hydrated ? formattedTimeLeft : <br />}
+    <span className="tabular-nums">
+      {hydrated ? (hasStarted ? 'SOON!' : formattedTimeLeft) : '-d --h --m --s'}
     </span>
   )
 }
@@ -46,6 +47,10 @@ export const CountdownOrLinkToDay = ({
       {hasStarted && currentDay ? (
         <>
           {currentDay?._title}: {currentDay?.name}
+        </>
+      ) : hasStarted ? (
+        <>
+          STARTS <Countdown />
         </>
       ) : (
         !!hasCountdown && (

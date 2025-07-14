@@ -1,10 +1,12 @@
 import { fragmentOn } from 'basehub'
 
-export const countdownInputFragment = fragmentOn('Input', {
-  iconButton: true,
+export const newsletterFragment = fragmentOn('Newsletter', {
   emailSubscriptions: {
     schema: true,
     ingestKey: true
   }
 })
-export type CountdownInput = fragmentOn.infer<typeof countdownInputFragment>
+
+export type NewsletterSubscriptions = fragmentOn.infer<
+  typeof newsletterFragment
+>

@@ -3,13 +3,7 @@ import { Container } from '../global/container'
 import { DayDivider } from './divider'
 
 import { Heading } from '../heading'
-import { ClientProvider } from '../global/client-provider'
-import { Countdown } from '../countdown'
-import { NewsletterForm } from '../newsletter-form'
-import {
-  CountdownInput,
-  countdownInputFragment
-} from '../newsletter-form/fragment'
+import { newsletterFragment } from '../newsletter-form/fragment'
 import { siteOrigin } from '@/constants/routing'
 import { Manifesto } from '../manifesto'
 import { Body } from '../body'
@@ -26,7 +20,8 @@ export const DayContent = async ({
     <Pump
       queries={[
         {
-          icons: { link: true },
+          newsletter: newsletterFragment,
+          icons: { link: true, paperPlane: true },
           site: {
             days: {
               __args: {
@@ -42,6 +37,13 @@ export const DayContent = async ({
                 _title: true,
                 name: true,
                 description: true,
+                links: {
+                  _id: true,
+                  _title: true,
+                  href: true,
+                  target: true,
+                  label: true
+                },
                 content: {
                   json: {
                     content: true
@@ -50,76 +52,21 @@ export const DayContent = async ({
               }
             }
           }
-        },
-        {
-          site: {
-            countdown: {
-              input: countdownInputFragment
-            },
-            days: {
-              __args: {
-                orderBy: 'date__ASC' as const,
-                filter: { isPublished: false },
-                first: 1
-              },
-              item: {
-                _title: true,
-                date: true
-              }
-            }
-          }
         }
       ]}
     >
       {async ([
         {
-          icons: { link },
+          newsletter: { emailSubscriptions },
+          icons: { link, paperPlane },
           site: {
             days: { item: day }
-          }
-        },
-        {
-          site: {
-            countdown: { input },
-            days: { item: upcomingDay }
           }
         }
       ]) => {
         'use server'
 
         if (!day) {
-          if (upcomingDay && isLastDay) {
-            const endDate = upcomingDay?.date
-              ? new Date(upcomingDay.date)
-              : new Date()
-
-            return (
-              <ClientProvider startDate={new Date()} endDate={endDate}>
-                <Container>
-                  <div className="dashed">
-                    <div className="p-10 binary">
-                      <div className="dashed">
-                        <div className="px-10 py-8 bg-background flex justify-between items-center">
-                          <p className="underline decoration-dashed text-dim font-bold text-sm md:text-base">
-                            {upcomingDay._title} starts in <Countdown />
-                          </p>
-                          <NewsletterForm
-                            input={input as CountdownInput}
-                            className="max-w-[252px] w-full pb-6"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-              </ClientProvider>
-            )
-          }
-
-          return null
-        }
-
-        if (!day.content) {
           return null
         }
 
@@ -139,15 +86,20 @@ export const DayContent = async ({
               </Heading>
 
               <div className="flex gap-x-5 md:gap-x-6 gap-y-2 text-xxs md:text-xs 2xl:text-sm">
-                <Link href="/blog/" label="Go to Blog" />
-                <Link href="#" label="Read on X" />
+                {(day.links ?? []).map((link) => {
+                  return (
+                    <Link
+                      key={link._id}
+                      href={link.href}
+                      label={link?.label || link._title}
+                    />
+                  )
+                })}
               </div>
             </div>
 
             {!!day.description && (
-              <p className="normal-case tracking-normal leading-snug mt-2">
-                {day.description}
-              </p>
+              <p className="normal-case leading-snug mt-2">{day.description}</p>
             )}
 
             <Body content={day.content.json.content} />
@@ -156,7 +108,7 @@ export const DayContent = async ({
               end of {!isLastDay ? day._title : 'ai week'}
             </DayDivider>
 
-            <Manifesto />
+            {isLastDay && <Manifesto />}
           </Container>
         )
       }}

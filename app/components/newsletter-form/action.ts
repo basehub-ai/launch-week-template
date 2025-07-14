@@ -2,7 +2,7 @@
 
 import { basehub, fragmentOn } from 'basehub'
 import { parseFormData, sendEvent } from 'basehub/events'
-import { countdownInputFragment } from './fragment'
+import { newsletterFragment } from './fragment'
 
 /**
  * Handles newsletter subscription.
@@ -11,19 +11,11 @@ import { countdownInputFragment } from './fragment'
  */
 export async function subscribe(data: FormData): Promise<FormState> {
   const {
-    site: {
-      countdown: {
-        input: {
-          emailSubscriptions: { ingestKey, schema }
-        }
-      }
+    newsletter: {
+      emailSubscriptions: { ingestKey, schema }
     }
   } = await basehub().query({
-    site: {
-      countdown: {
-        input: countdownInputFragment
-      }
-    }
+    newsletter: newsletterFragment
   })
   const parsed = parseFormData(ingestKey, schema, data)
 
