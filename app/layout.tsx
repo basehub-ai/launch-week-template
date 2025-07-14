@@ -11,6 +11,7 @@ import { siteOrigin } from '@/constants/routing'
 import { PageView } from './components/page-view'
 import { Toolbar } from 'basehub/next-toolbar'
 
+export const experimental_ppr = true
 export const dynamic = 'force-static'
 
 export const generateMetadata = async (): Promise<Metadata> => {

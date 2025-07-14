@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
@@ -6,7 +7,7 @@
 
   --spacing-header: 64px;
 
-  --color-base: var(--base);
+  /* --color-base: var(--base); */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-faint: var(--faint);
@@ -15,12 +16,15 @@
   --color-border-solid: var(--border-solid);
   --color-shade-hover: var(--shade-hover);
   --color-label: var(--label);
+
+  --text-xxs: 11px;
 }
 
 :root {
   /* bg */
-  --base: #fff;
+  /* --base: #fff; */
   --background: #fafafa;
+  --background-raw: 250, 250, 250;
 
   /* text */
   --foreground: var(--faint);
@@ -42,8 +46,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* bg */
-    --base: #0c0c0c;
+    /* --base: #0c0c0c; */
     --background: #040404;
+    --background-raw: 4, 4, 4;
 
     /* text */
     --foreground: var(--faint);
@@ -99,6 +104,20 @@ body {
     letter-spacing: normal;
   }
 
+  .divider {
+    height: 1px;
+    background:
+      linear-gradient(to right, transparent 50%, var(--color-faint) 50%);
+    background-size: 4px 2px;
+  }
+
+  .divider-md {
+    height: 1px;
+    background:
+      linear-gradient(to right, transparent 50%, var(--color-faint) 50%);
+    background-size: 8px 4px;
+  }
+
   .dashed {
     padding: 1px !important;
     background-image: repeating-linear-gradient(
@@ -136,6 +155,17 @@ body {
     background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
+  }
+
+  .prose {
+    letter-spacing: -0.8px;
+  }
+
+  .binary {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='30'%3E%3Ctext x='0' y='20' font-size='20' letter-spacing='5' font-family='monospace' fill='%23E3E3E3'%3E1101010010110101001011%3C/text%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 250px;
+    box-shadow: -1px -1px 30px 0px #FFF inset, 1px 1px 30px 0px #FFF inset;
   }
 }
 

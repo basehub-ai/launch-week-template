@@ -6,22 +6,29 @@
     "dev": "basehub dev & next dev --turbopack",
     "build": "basehub && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "email": "email dev"
   },
   "dependencies": {
     "@bsmnt/drop": "^1.2.2",
+    "@radix-ui/react-id": "^1.1.1",
+    "@react-email/components": "^0.3.0",
+    "@tailwindcss/typography": "^0.5.16",
     "basehub": "^9.0.21",
     "clsx": "^2.1.1",
     "geist": "^1.4.2",
     "next": "15.3.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^4.6.0"
   },
   "devDependencies": {
+    "@react-email/preview-server": "^4.1.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "react-email": "^4.1.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

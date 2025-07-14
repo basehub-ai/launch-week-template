@@ -1,15 +1,24 @@
 'use client'
 
 import * as React from 'react'
+import { useId } from '@radix-ui/react-id'
 
 import { clsx } from 'clsx'
 import { Icon } from 'basehub/react-icon'
 import { FormState, subscribe } from './action'
-import { CountdownInput } from './fragment'
+import { NewsletterSubscriptions } from './fragment'
 
 const INITIAL_STATE: FormState = { success: true }
 
-export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
+export const NewsletterForm = ({
+  iconButton,
+  subscriptions: { emailSubscriptions },
+  className = ''
+}: {
+  iconButton: string
+  subscriptions: NewsletterSubscriptions
+  className?: string
+}) => {
   const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({})
   const [subscribedEmail, setSubscribedEmail] = React.useState<string | null>(
     null
@@ -40,7 +49,7 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
   const [formValues, setFormValues] = React.useState(
     () =>
       Object.fromEntries(
-        input.emailSubscriptions.schema.map((i) => [i.name, ''])
+        emailSubscriptions.schema.map((i) => [i.name, ''])
       ) as Record<string, string>
   )
 
@@ -62,12 +71,17 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
   }, [state])
 
   return (
-    <form action={formAction}>
-      {input.emailSubscriptions.schema.map((i) => {
+    <form
+      action={formAction}
+      className={clsx('relative overflow-x-clip', className)}
+    >
+      {emailSubscriptions.schema.map((i) => {
+        const inputId = i.id + '-' + useId()
+
         return (
           <React.Fragment key={i.id}>
             <label
-              htmlFor={i.id}
+              htmlFor={inputId}
               className="text-sm font-medium opacity-80 pb-2 flex items-center"
             >
               {i.label}
@@ -77,6 +91,7 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
                 <input
                   autoFocus
                   {...i}
+                  id={inputId}
                   ref={(el) => {
                     inputRefs.current[i.name] = el
                   }}
@@ -97,7 +112,7 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
                     )}
                   >
                     <Icon
-                      content={input.iconButton}
+                      content={iconButton}
                       components={{
                         svg: (props) => <svg {...props} className="size-3.5" />
                       }}
@@ -108,13 +123,13 @@ export const NewsletterForm = ({ input }: { input: CountdownInput }) => {
             </div>
 
             {!state.success && state.errors[i.name] ? (
-              <div className="text-red-500 text-sm mt-3 absolute max-w-[291px]">
+              <div className="text-red-500 text-sm mt-2 absolute overflow-hidden text-ellipsis w-full">
                 {state.errors[i.name]}
               </div>
             ) : (
               <>
                 {!!subscribedEmail && (
-                  <div className="text-green-500 rounded text-sm mt-3 absolute max-w-[291px]">
+                  <div className="text-green-500 rounded text-sm mt-2 absolute whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     Subscribed with{' '}
                     <strong className="break-words">{subscribedEmail}</strong>
                   </div>

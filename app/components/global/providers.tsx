@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Pump } from 'basehub/react-pump'
 import { ClientProvider } from './client-provider'
-import { launchFragment } from '@/app/fragments/launch'
 
 export const Providers = async ({
   children
@@ -9,7 +8,18 @@ export const Providers = async ({
   children: React.ReactNode
 }) => {
   return (
-    <Pump queries={[{ site: { days: launchFragment } }]}>
+    <Pump
+      queries={[
+        {
+          site: {
+            days: {
+              __args: { orderBy: 'date__ASC' as const },
+              item: { date: true }
+            }
+          }
+        }
+      ]}
+    >
       {async ([
         {
           site: {
@@ -19,10 +29,10 @@ export const Providers = async ({
       ]) => {
         'use server'
 
-        const startDate = item?.date ? new Date(item.date) : new Date()
+        const endDate = item?.date ? new Date(item.date) : new Date()
 
         return (
-          <ClientProvider startDate={new Date()} endDate={startDate}>
+          <ClientProvider startDate={new Date()} endDate={endDate}>
             {children}
           </ClientProvider>
         )

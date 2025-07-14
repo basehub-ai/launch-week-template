@@ -3,8 +3,12 @@
 import * as React from 'react'
 
 import { useCountdownStore } from '@bsmnt/drop'
+import { Day } from './day/fragment'
+import { getCurrentDay } from '../utils/days'
 
 export const Countdown = () => {
+  const [hydrated, setHydrated] = React.useState(false)
+  const hasStarted = useCountdownStore()((s) => s.isComplete)
   const remaining = useCountdownStore()((s) => s.humanTimeRemaining)
 
   const formattedTimeLeft = React.useMemo(() => {
@@ -16,9 +20,50 @@ export const Countdown = () => {
     )}s`
   }, [remaining])
 
+  React.useEffect(() => {
+    setHydrated(true)
+  }, [])
+
   return (
-    <span className="tabular-nums" suppressHydrationWarning>
-      {formattedTimeLeft}
+    <span className="tabular-nums">
+      {hydrated ? (hasStarted ? 'SOON!' : formattedTimeLeft) : '-d --h --m --s'}
     </span>
+  )
+}
+
+export const CountdownOrLinkToDay = ({
+  overtitle,
+  days
+}: {
+  overtitle: string
+  days: Day[]
+}) => {
+  const hasCountdown = Boolean(overtitle?.includes(`{{countdown}}`))
+  const hasStarted = useCountdownStore()((s) => s.isComplete)
+  const currentDay = getCurrentDay(days)
+
+  return (
+    <h3 className="text-accent italic font-medium mb-1">
+      {hasStarted && currentDay ? (
+        <>
+          {currentDay?._title}: {currentDay?.name}
+        </>
+      ) : hasStarted ? (
+        <>
+          STARTS <Countdown />
+        </>
+      ) : (
+        !!hasCountdown && (
+          <>
+            {overtitle.split(`{{countdown}}`).map((seg, index) => (
+              <React.Fragment key={seg + index}>
+                {index === 1 && <Countdown />}
+                <span>{seg}</span>
+              </React.Fragment>
+            ))}
+          </>
+        )
+      )}
+    </h3>
   )
 }
