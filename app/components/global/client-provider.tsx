@@ -23,7 +23,7 @@ export const ClientProvider = ({
       lastDayHeading.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
-        inline: 'nearest'
+        inline: 'start'
       })
     }
   }, [])

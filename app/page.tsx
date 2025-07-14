@@ -72,7 +72,7 @@ export default async function Home() {
               className={clsx(
                 'mx-auto flex flex-col gap-6 row-start-2 pt-[140px]',
                 publishedDays.length > 0 &&
-                  '2xl:h-[768px] pb-32 lg:pt-52 2xl:pt-64'
+                  '2xl:h-[768px] pb-40 lg:pt-52 2xl:pt-64'
               )}
             >
               <div className="max-w-[291px] mx-auto w-full">
@@ -91,6 +91,7 @@ export default async function Home() {
                 iconButton={paperPlane}
                 subscriptions={{ emailSubscriptions }}
                 className="max-w-[291px] mx-auto w-full"
+                autoFocus={publishedDays.length === 0}
               />
             </Container>
 

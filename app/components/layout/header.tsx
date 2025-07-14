@@ -51,7 +51,7 @@ export const Header = async () => {
         const currentDay = getCurrentDay(days.items)
 
         return (
-          <header className="sticky top-0 z-50 bg-gradient-to-b from-50%  from-background via-70% via-[rgba(var(--background-raw),_0.70)] to-[rgba(var(--background-raw),_0.00)] md:from-30% md:via-60%">
+          <header className="sticky top-0 z-50 bg-gradient-to-b from-50% from-background via-70% via-[rgba(var(--background-raw),_0.70)] to-[rgba(var(--background-raw),_0.00)] md:from-30% md:via-60%">
             <Container className="min-h-header flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5">
               {/* left/top side */}
               <div className="flex items-center flex-wrap gap-x-2 pt-4 pb-4 justify-between lg:justify-start w-full lg:w-auto">
@@ -93,7 +93,7 @@ export const Header = async () => {
                     <React.Fragment key={day._id}>
                       <div className="flex flex-col md:flex-row items-center gap-x-1">
                         {isCurrentDay ? (
-                          <span className="size-1.5 rounded-full bg-accent mx-1" />
+                          <span className="size-1.5 rounded-full bg-accent mx-1 mb-1.5 lg:mb-0" />
                         ) : (
                           <Icon
                             content={dayHasPassed ? unlockedDay : lockedDay}

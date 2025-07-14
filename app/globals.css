@@ -5,7 +5,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --spacing-header: 120px;
 
   /* --color-base: var(--base); */
   --color-background: var(--background);
@@ -20,13 +19,10 @@
   --text-xxs: 11px;
 
   --tracking-prose: -0.8px;
+
+  --spacing-header: var(--header-height);
 }
 
-@media screen and (min-width: 768px) {
-  @theme inline {
-    --spacing-header: 64px;
-  }
-}
 
 :root {
   /* bg */
@@ -45,6 +41,12 @@
 
   /* action */
   --shade-hover: #e3e3e3;
+
+  --header-height: 120px;
+
+  @media (min-width: 1024px) {
+    --header-height: 64px;
+  }
 
   ::selection {
     background-color: var(--accent-transparent);

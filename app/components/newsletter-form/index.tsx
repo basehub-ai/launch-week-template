@@ -13,11 +13,13 @@ const INITIAL_STATE: FormState = { success: true }
 export const NewsletterForm = ({
   iconButton,
   subscriptions: { emailSubscriptions },
-  className = ''
+  className = '',
+  autoFocus = false
 }: {
   iconButton: string
   subscriptions: NewsletterSubscriptions
   className?: string
+  autoFocus?: boolean
 }) => {
   const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({})
   const [subscribedEmail, setSubscribedEmail] = React.useState<string | null>(
