@@ -149,7 +149,7 @@ export const POST = async (request: Request) => {
     await resend.batch.send(
       subsBatch
         .map(({ email, id }) => {
-          if (emailsProcessed.has(email)) {
+          if (emailsProcessed.has(email) || email.endsWith('@test.com')) {
             return null
           }
 
