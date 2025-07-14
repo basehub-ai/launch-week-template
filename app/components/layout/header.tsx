@@ -51,13 +51,7 @@ export const Header = async () => {
         const currentDay = getCurrentDay(days.items)
 
         return (
-          <header
-            className="sticky top-0 z-50"
-            style={{
-              background:
-                'linear-gradient(180deg, var(--color-background) 30.29%, rgba(var(--background-raw), 0.70) 60.58%, rgba(var(--background-raw), 0.00) 100%)'
-            }}
-          >
+          <header className="sticky top-0 z-50 bg-gradient-to-b from-50%  from-background via-70% via-[rgba(var(--background-raw),_0.70)] to-[rgba(var(--background-raw),_0.00)] md:from-30% md:via-60%">
             <Container className="min-h-header flex flex-col lg:flex-row lg:flex-nowrap items-center justify-between gap-x-5">
               {/* left/top side */}
               <div className="flex items-center flex-wrap gap-x-2 pt-4 pb-4 justify-between lg:justify-start w-full lg:w-auto">

@@ -70,10 +70,9 @@ export default async function Home() {
           <main>
             <Container
               className={clsx(
-                'mx-auto flex flex-col gap-6 row-start-2',
-                publishedDays.length > 0
-                  ? '2xl:h-[768px] pb-32 lg:pt-52 2xl:pt-64'
-                  : 'pt-[140px]'
+                'mx-auto flex flex-col gap-6 row-start-2 pt-[140px]',
+                publishedDays.length > 0 &&
+                  '2xl:h-[768px] pb-32 lg:pt-52 2xl:pt-64'
               )}
             >
               <div className="max-w-[291px] mx-auto w-full">
@@ -114,10 +113,10 @@ export default async function Home() {
               >
                 <Container>
                   <div className="dashed">
-                    <div className="p-10 binary">
+                    <div className="p-6 lg:p-10 binary">
                       <div className="dashed">
-                        <div className="px-10 py-8 bg-background flex justify-between items-center">
-                          <p className="underline decoration-dashed text-dim font-bold text-sm md:text-base">
+                        <div className="p-6 lg:px-10 lg:py-8 bg-background flex flex-col gap-8 md:flex-row justify-between md:items-center">
+                          <p className="underline decoration-dashed text-dim font-bold text-base">
                             {upcomingDay._title} starts in <Countdown />
                           </p>
                           <NewsletterForm

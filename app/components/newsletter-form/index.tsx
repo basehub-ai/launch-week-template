@@ -89,7 +89,6 @@ export const NewsletterForm = ({
             <div className="dashed">
               <div className="flex h-8">
                 <input
-                  autoFocus
                   {...i}
                   id={inputId}
                   ref={(el) => {

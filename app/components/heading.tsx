@@ -21,7 +21,7 @@ export const Heading = ({
     <H
       {...props}
       className={clsx(
-        'underline tracking-normal decoration-dashed text-dim font-bold text-sm md:text-base scroll-mt-[var(--spacing-header)]',
+        'underline tracking-normal decoration-dashed text-dim font-bold text-sm sm:text-base scroll-mt-[var(--spacing-header)]',
         props.className
       )}
     >

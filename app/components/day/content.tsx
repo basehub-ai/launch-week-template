@@ -82,7 +82,7 @@ export const DayContent = async ({
                 {day._title}: {day.name}
               </Heading>
 
-              <div className="flex gap-x-5 md:gap-x-6 gap-y-2 text-xxs md:text-xs 2xl:text-sm">
+              <div className="flex gap-x-5 md:gap-x-6 gap-y-2 text-sm 2xl:text-sm">
                 {(day.links ?? []).map((link) => {
                   return (
                     <Link
@@ -96,7 +96,7 @@ export const DayContent = async ({
             </div>
 
             {!!day.description && (
-              <p className="normal-case leading-snug tracking-prose mt-2">
+              <p className="normal-case leading-snug text-sm sm:text-base tracking-prose mt-2">
                 {day.description}
               </p>
             )}
