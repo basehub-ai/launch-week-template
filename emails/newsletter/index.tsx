@@ -678,6 +678,7 @@ const defaultComponents: RichTextProps['components'] = {
   tr: ({ children }) => (
     <tr className="border-b border-[#E8E8EC]">{children}</tr>
   ),
+  li: ({ children }) => <li className="my-0">{children}</li>,
   tbody: ({ children }) => <tbody>{children}</tbody>,
   video: (props) => (
     <A href={props.src}>

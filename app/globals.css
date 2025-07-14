@@ -18,6 +18,8 @@
   --color-label: var(--label);
 
   --text-xxs: 11px;
+
+  --tracking-prose: -0.8px;
 }
 
 :root {

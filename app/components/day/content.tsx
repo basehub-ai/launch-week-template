@@ -96,7 +96,9 @@ export const DayContent = async ({
             </div>
 
             {!!day.description && (
-              <p className="normal-case leading-snug mt-2">{day.description}</p>
+              <p className="normal-case leading-snug tracking-prose mt-2">
+                {day.description}
+              </p>
             )}
 
             <Body content={day.content.json.content} />
