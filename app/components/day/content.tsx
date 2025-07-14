@@ -3,7 +3,6 @@ import { Container } from '../global/container'
 import { DayDivider } from './divider'
 
 import { Heading } from '../heading'
-import { newsletterFragment } from '../newsletter-form/fragment'
 import { siteOrigin } from '@/constants/routing'
 import { Manifesto } from '../manifesto'
 import { Body } from '../body'
