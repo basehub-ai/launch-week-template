@@ -78,7 +78,7 @@ export default async function Home() {
             >
               <div className="max-w-[291px] mx-auto w-full">
                 <CountdownOrLinkToDay
-                  days={site.days.items}
+                  days={publishedDays}
                   overtitle={site.countdown.overtitle}
                 />
                 <h1 className="font-semibold mb-6 text-dim text-xl">

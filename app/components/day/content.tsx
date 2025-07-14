@@ -20,8 +20,7 @@ export const DayContent = async ({
     <Pump
       queries={[
         {
-          newsletter: newsletterFragment,
-          icons: { link: true, paperPlane: true },
+          icons: { link: true },
           site: {
             days: {
               __args: {
@@ -57,8 +56,7 @@ export const DayContent = async ({
     >
       {async ([
         {
-          newsletter: { emailSubscriptions },
-          icons: { link, paperPlane },
+          icons: { link },
           site: {
             days: { item: day }
           }

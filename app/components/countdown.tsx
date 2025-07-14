@@ -26,7 +26,7 @@ export const Countdown = () => {
 
   return (
     <span className="tabular-nums">
-      {hydrated ? (hasStarted ? 'SOON!' : formattedTimeLeft) : '-d --h --m --s'}
+      {hydrated ? hasStarted ? 'SOON!' : formattedTimeLeft : <br />}
     </span>
   )
 }
