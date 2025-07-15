@@ -118,7 +118,7 @@ export default async function Home() {
                       <div className="dashed">
                         <div className="p-6 lg:px-10 lg:py-8 bg-background flex flex-col gap-8 md:flex-row justify-between md:items-center">
                           <p className="underline decoration-dashed text-dim font-bold text-base">
-                            {upcomingDay._title} starts in <Countdown />
+                            {upcomingDay._title} starts <Countdown />
                           </p>
                           <NewsletterForm
                             subscriptions={{ emailSubscriptions }}

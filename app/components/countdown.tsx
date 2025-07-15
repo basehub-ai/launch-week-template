@@ -15,7 +15,7 @@ export const Countdown = () => {
     const { days, hours, minutes, seconds } = remaining
     const format = (num: number | string) =>
       typeof num === 'string' ? parseInt(num) : num < 10 ? `0${num}` : `${num}`
-    return `${format(days)}d ${format(hours)}h ${format(minutes)}m ${format(
+    return `in ${format(days)}d ${format(hours)}h ${format(minutes)}m ${format(
       seconds
     )}s`
   }, [remaining])
