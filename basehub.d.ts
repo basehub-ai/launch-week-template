@@ -124,7 +124,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Analytics | ButtonComponent | Countdown | Days | DaysItem | Footer | Header | Icons | Input | LinkComponent | Links | Manifesto | Metadata | Newsletter | Site | SocialLinkComponent | SocialLinks | _AgentStart | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList | socialLinkComponent_AsList) & { __isUnion?: true }
+export type BlockDocument = (Analytics | ButtonComponent | Countdown | Days | DaysItem | Footer | Header | Icons | LinkComponent | Links | Manifesto | Metadata | Newsletter | Site | SocialLinkComponent | SocialLinks | _AgentStart | buttonComponent_AsList | daysItem_AsList | linkComponent_AsList | socialLinkComponent_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -265,7 +265,6 @@ export interface Countdown {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
-    input: Input
     overtitle: Scalars['String']
     title: Title
     __typename: 'Countdown'
@@ -373,24 +372,12 @@ export interface Icons {
     _slugPath: Scalars['String']
     _sys: BlockDocumentSys
     _title: Scalars['String']
+    iconButton: Scalars['String']
     link: Scalars['String']
     lockedDay: Scalars['String']
     paperPlane: Scalars['String']
     unlockedDay: Scalars['String']
     __typename: 'Icons'
-}
-
-export interface Input {
-    _analyticsKey: Scalars['String']
-    _dashboardUrl: Scalars['String']
-    _id: Scalars['String']
-    _idPath: Scalars['String']
-    _slug: Scalars['String']
-    _slugPath: Scalars['String']
-    _sys: BlockDocumentSys
-    _title: Scalars['String']
-    iconButton: Scalars['String']
-    __typename: 'Input'
 }
 
 export interface LinkComponent {
@@ -913,7 +900,6 @@ export interface BlockDocumentGenqlSelection{
     on_Footer?: FooterGenqlSelection
     on_Header?: HeaderGenqlSelection
     on_Icons?: IconsGenqlSelection
-    on_Input?: InputGenqlSelection
     on_LinkComponent?: LinkComponentGenqlSelection
     on_Links?: LinksGenqlSelection
     on_Manifesto?: ManifestoGenqlSelection
@@ -1135,7 +1121,6 @@ export interface CountdownGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
-    input?: InputGenqlSelection
     overtitle?: boolean | number
     title?: TitleGenqlSelection
     __typename?: boolean | number
@@ -1285,29 +1270,11 @@ export interface IconsGenqlSelection{
     _slugPath?: boolean | number
     _sys?: BlockDocumentSysGenqlSelection
     _title?: boolean | number
+    iconButton?: boolean | number
     link?: boolean | number
     lockedDay?: boolean | number
     paperPlane?: boolean | number
     unlockedDay?: boolean | number
-    __typename?: boolean | number
-}
-
-export interface InputGenqlSelection{
-    _analyticsKey?: { __args: {
-    /**
-     * The scope of the analytics key. Use `send` for just ingesting data. Use `query` if you need to show an analytics data in your website.
-     * 
-     * Have in mind, if you expose your `query` analytics key in the frontend, you'll be exposing all of this block's analytics data to the public. This is generally safe, but it might not be in your case.
-     */
-    scope?: (AnalyticsKeyScope | null)} } | boolean | number
-    _dashboardUrl?: boolean | number
-    _id?: boolean | number
-    _idPath?: boolean | number
-    _slug?: boolean | number
-    _slugPath?: boolean | number
-    _sys?: BlockDocumentSysGenqlSelection
-    _title?: boolean | number
-    iconButton?: boolean | number
     __typename?: boolean | number
 }
 
@@ -2060,10 +2027,6 @@ export interface FragmentsMap {
   Icons: {
     root: Icons,
     selection: IconsGenqlSelection,
-}
-  Input: {
-    root: Input,
-    selection: InputGenqlSelection,
 }
   LinkComponent: {
     root: LinkComponent,
