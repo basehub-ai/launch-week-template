@@ -21,8 +21,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.1.11)
       basehub:
-        specifier: ^9.0.21
-        version: 9.0.21(@babel/runtime@7.27.6)(@types/react@19.1.8)(react@19.1.0)(typescript@5.8.3)(zod@3.25.76)
+        specifier: ^9.2.3
+        version: 9.2.3(@babel/runtime@7.27.6)(@types/react@19.1.8)(react@19.1.0)(typescript@5.8.3)(zod@3.25.76)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1458,8 +1458,8 @@ packages:
     resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
     engines: {node: ^4.5.0 || >= 5.9}
 
-  basehub@9.0.21:
-    resolution: {integrity: sha512-pH37pVv9gjn+VEL/3IllNwHLkXpD6Ntrsklet5yb4bV+beCaqRWXnUavJlh+YnhyLJBoABF6dRNltTeUKtun+Q==}
+  basehub@9.2.3:
+    resolution: {integrity: sha512-u8oNSs+aRS6jyz4eKQkP6+moXePhv+Dv6cDMK1JJsfvqz1Hy2x0QNtZr6S3bo7nCSoNDxSkKgMZGmy1B/Ju4gg==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -2802,9 +2802,6 @@ packages:
 
   serialize-javascript@6.0.2:
     resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==}
-
-  server-only@0.0.1:
-    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
   sharp@0.34.1:
     resolution: {integrity: sha512-1j0w61+eVxu7DawFJtnfYcvSv6qPFvfTaqzTQ2BLknVhHTwGS8sc63ZBF4rzkWMBVKybo4S5OBtDdZahh2A1xg==}
@@ -4591,7 +4588,7 @@ snapshots:
 
   base64id@2.0.0: {}
 
-  basehub@9.0.21(@babel/runtime@7.27.6)(@types/react@19.1.8)(react@19.1.0)(typescript@5.8.3)(zod@3.25.76):
+  basehub@9.2.3(@babel/runtime@7.27.6)(@types/react@19.1.8)(react@19.1.0)(typescript@5.8.3)(zod@3.25.76):
     dependencies:
       '@basehub/mutation-api-helpers': 2.1.3(zod@3.25.76)
       '@radix-ui/react-slot': 1.2.3(@types/react@19.1.8)(react@19.1.0)
@@ -4612,7 +4609,6 @@ snapshots:
       mkdirp: 3.0.1
       pusher-js: 8.4.0
       rimraf: 6.0.1
-      server-only: 0.0.1
       shiki: 1.17.7
       typesense: 1.8.2(@babel/runtime@7.27.6)
     transitivePeerDependencies:
@@ -6079,8 +6075,6 @@ snapshots:
   serialize-javascript@6.0.2:
     dependencies:
       randombytes: 2.1.0
-
-  server-only@0.0.1: {}
 
   sharp@0.34.1:
     dependencies:

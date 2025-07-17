@@ -14,7 +14,7 @@
     "@radix-ui/react-id": "^1.1.1",
     "@react-email/components": "^0.3.0",
     "@tailwindcss/typography": "^0.5.16",
-    "basehub": "^9.0.21",
+    "basehub": "^9.2.3",
     "clsx": "^2.1.1",
     "geist": "^1.4.2",
     "next": "15.3.5",
