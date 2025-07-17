@@ -1,5 +1,5 @@
 'use client'
-import { Pageviews } from '@/basehub'
+import { Pageviews } from '@/basehub-types'
 import { sendEvent } from 'basehub/events'
 import { useEffect, useRef } from 'react'
 
