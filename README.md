@@ -4,7 +4,7 @@
 
 # Launch Week Template
 
-[![Use template](https://basehub.com/template-button.svg)](https://basehub.com/basehub/ai-week)
+[![Use template](https://basehub.com/template-button.svg)](https://basehub.com/basehub/launch-week)
 
 Fully featured launch week website.
 
