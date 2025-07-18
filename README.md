@@ -10,6 +10,7 @@ Fully featured launch week website.
 
 - 🔸 Perfect for startups launching features
 - 🔸 Fully editable from BaseHub
+- 🔸 (optional) Newsletter with email sending with React Email + Resend
 - 🔸 Requires just a BaseHub account and a deployment platform—no other service
 
 ## Stack
