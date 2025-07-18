@@ -8,7 +8,18 @@ import { Img, Link } from '@react-email/components'
 
 const dryRun = false
 export const POST = async (request: Request) => {
-  'use server'
+  if (!resend) {
+    return new Response(
+      JSON.stringify({
+        error:
+          'Resend is not configured. Please set the RESEND_API_KEY environment variable.'
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+  }
 
   const data = await basehub().query({
     newsletter: {
@@ -232,7 +243,9 @@ export const POST = async (request: Request) => {
   return new Response(
     JSON.stringify({
       success: true,
-      message: `${emailsProcessed.size} email${emailsProcessed.size === 1 ? '' : 's'} sent for ${emailQuery.site.days.item?._title}`
+      message: `${emailsProcessed.size} email${
+        emailsProcessed.size === 1 ? '' : 's'
+      } sent for ${emailQuery.site.days.item?._title}`
     }),
     { status: 200, headers: { 'Content-Type': 'application/json' } }
   )
